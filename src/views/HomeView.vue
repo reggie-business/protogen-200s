@@ -105,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, inject, ref, type Ref } from 'vue'
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -162,7 +162,7 @@ interface AggregatedMetrics {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Filler)
 
 const metrics = rawMetrics as MetricsData
-const selectedRegion = ref<string>('all')
+const selectedRegion = inject<Ref<string>>('selectedRegion', ref('all'))
 const numberFormatter = new Intl.NumberFormat('en-US')
 const emptyRegionMetrics: RegionMetrics = {
   shipments: 0,
@@ -170,11 +170,6 @@ const emptyRegionMetrics: RegionMetrics = {
   exceptions: 0,
   avgTransitDays: 0,
 }
-
-const regionOptions = computed(() => [
-  { label: 'All Regions', value: 'all' },
-  ...metrics.regions.map((region) => ({ label: region, value: region })),
-])
 
 const selectedRegionExists = computed(
   () => selectedRegion.value === 'all' || metrics.regions.includes(selectedRegion.value),
@@ -504,6 +499,32 @@ const exceptionRows = computed(() =>
   color: #6b7782;
   font-weight: 700;
   border-bottom: 1px solid #e0e6ea;
+  padding: 0 12px;
+}
+
+.region-table thead th:first-child,
+.exceptions-table thead th:first-child {
+  padding-left: 16px;
+}
+
+.region-table thead th:last-child,
+.exceptions-table thead th:last-child {
+  padding-right: 16px;
+}
+
+:deep(.region-table tbody td),
+:deep(.exceptions-table tbody td) {
+  padding: 0 12px;
+}
+
+:deep(.region-table tbody td:first-child),
+:deep(.exceptions-table tbody td:first-child) {
+  padding-left: 16px;
+}
+
+:deep(.region-table tbody td:last-child),
+:deep(.exceptions-table tbody td:last-child) {
+  padding-right: 16px;
 }
 
 .num-col {

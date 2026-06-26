@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, ref, computed } from 'vue'
+import { nextTick, onMounted, provide, ref } from 'vue'
 import { RouterView } from 'vue-router'
 
 // Demo-only client-side gate for mock data. This is not real authentication.
@@ -73,12 +73,14 @@ const selectedRegion = ref<string>('all')
 
 const regionOptions = ref([
   { label: 'All Regions', value: 'all' },
-  { label: 'Midwest', value: 'midwest' },
-  { label: 'Northeast', value: 'northeast' },
-  { label: 'South', value: 'south' },
-  { label: 'West', value: 'west' },
-  { label: 'Mountain', value: 'mountain' },
+  { label: 'Midwest', value: 'Midwest' },
+  { label: 'Northeast', value: 'Northeast' },
+  { label: 'South', value: 'South' },
+  { label: 'West', value: 'West' },
+  { label: 'Mountain', value: 'Mountain' },
 ])
+
+provide('selectedRegion', selectedRegion)
 
 const submitAccessCode = () => {
   if (enteredCode.value === ACCESS_CODE) {
