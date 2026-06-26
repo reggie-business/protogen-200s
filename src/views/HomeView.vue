@@ -1,106 +1,108 @@
 <template>
   <v-container fluid class="dashboard-content">
-    <div class="context-line mb-5">
-      <div class="context-item">
-        <span class="context-label">Scope</span>
-        <strong>{{ selectedRegionLabel }}</strong>
+    <div class="dashboard-shell">
+      <div class="context-line">
+        <div class="context-item">
+          <span class="context-label">Scope</span>
+          <strong>{{ selectedRegionLabel }}</strong>
+        </div>
+        <div class="context-item">
+          <span class="context-label">Last Updated</span>
+          <strong>{{ latestPeriodLabel }}</strong>
+        </div>
       </div>
-      <div class="context-item">
-        <span class="context-label">Last Updated</span>
-        <strong>{{ latestPeriodLabel }}</strong>
-      </div>
+
+      <v-row class="metric-row" style="width: 100%">
+        <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" lg="3" class="metric-col" style="min-width: 0">
+          <MetricCard
+            :label="tile.label"
+            :value="tile.value"
+            :unit="tile.unit"
+            :trend="tile.trend"
+            :delta="tile.delta"
+            :delta-is-good="tile.deltaIsGood"
+          />
+        </v-col>
+      </v-row>
+
+      <v-row class="chart-row" style="width: 100%">
+        <v-col cols="12" lg="8" class="chart-col" style="min-width: 0">
+          <v-card flat class="panel-card" height="360">
+            <div class="panel-content pa-6">
+              <div class="panel-header">
+                <span class="panel-title">On-Time Delivery Rate</span>
+                <span class="panel-sub">12-week trend, filtered by scope</span>
+              </div>
+              <div class="trend-chart-wrap">
+                <Line :data="trendChartData" :options="trendChartOptions" />
+              </div>
+            </div>
+          </v-card>
+        </v-col>
+
+        <v-col cols="12" lg="4" class="regional-col" style="min-width: 0">
+          <v-card flat class="panel-card" height="360">
+            <div class="panel-content pa-6">
+              <div class="panel-header">
+                <span class="panel-title">Regional Performance</span>
+                <span class="panel-sub">Weekly shipments and on-time %</span>
+              </div>
+              <v-table density="compact" class="region-table">
+                <thead>
+                  <tr>
+                    <th class="text-left">Region</th>
+                    <th class="text-right num-col">Shipments</th>
+                    <th class="text-right num-col">On-Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="row in regionalRows" :key="row.region" class="data-row">
+                    <td>{{ row.region }}</td>
+                    <td class="text-right num-col">{{ row.shipments }}</td>
+                    <td class="text-right num-col" :class="row.onTimeClass">{{ row.onTime }}</td>
+                  </tr>
+                </tbody>
+              </v-table>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-row class="exceptions-row" style="width: 100%">
+        <v-col cols="12" class="exceptions-col" style="min-width: 0">
+          <v-card flat class="panel-card">
+            <div class="panel-content pa-6">
+              <div class="panel-header">
+                <span class="panel-title">Open Exceptions</span>
+                <span class="panel-sub">Recent events sorted by severity and recency</span>
+              </div>
+              <v-table density="compact" class="exceptions-table">
+                <thead>
+                  <tr>
+                    <th class="text-left col-shipment-id">Shipment ID</th>
+                    <th class="text-left col-region">Region</th>
+                    <th class="text-left col-type">Type</th>
+                    <th class="text-left col-severity">Severity</th>
+                    <th class="text-left col-period">Period</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="ex in exceptionRows" :key="ex.id" class="data-row">
+                    <td class="font-weight-medium col-shipment-id id-code">{{ ex.id }}</td>
+                    <td class="col-region">{{ ex.region }}</td>
+                    <td class="col-type">{{ ex.type }}</td>
+                    <td class="col-severity">
+                      <span class="severity-badge" :class="`severity-${ex.severity.toLowerCase()}`">{{ ex.severity }}</span>
+                    </td>
+                    <td class="text-medium-emphasis col-period period-code">{{ ex.period }}</td>
+                  </tr>
+                </tbody>
+              </v-table>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
     </div>
-
-    <v-row class="mb-6 metric-row" style="width: 100%">
-      <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" lg="3" class="metric-col" style="min-width: 0">
-        <MetricCard
-          :label="tile.label"
-          :value="tile.value"
-          :unit="tile.unit"
-          :trend="tile.trend"
-          :delta="tile.delta"
-          :delta-is-good="tile.deltaIsGood"
-        />
-      </v-col>
-    </v-row>
-
-    <v-row class="mb-6 chart-row" style="width: 100%">
-      <v-col cols="12" lg="8" class="chart-col" style="min-width: 0">
-        <v-card flat class="panel-card" height="348">
-          <div class="panel-content pa-6">
-            <div class="panel-header">
-              <span class="panel-title">On-Time Delivery Rate</span>
-              <span class="panel-sub">12-week trend, filtered by scope</span>
-            </div>
-            <div class="trend-chart-wrap mt-4">
-              <Line :data="trendChartData" :options="trendChartOptions" />
-            </div>
-          </div>
-        </v-card>
-      </v-col>
-
-      <v-col cols="12" lg="4" class="regional-col" style="min-width: 0">
-        <v-card flat class="panel-card" height="348">
-          <div class="panel-content pa-6">
-            <div class="panel-header">
-              <span class="panel-title">Regional Performance</span>
-              <span class="panel-sub">Weekly shipments and on-time %</span>
-            </div>
-            <v-table density="compact" class="mt-4 region-table">
-              <thead>
-                <tr>
-                  <th class="text-left">Region</th>
-                  <th class="text-right num-col">Shipments</th>
-                  <th class="text-right num-col">On-Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="row in regionalRows" :key="row.region" class="data-row">
-                  <td>{{ row.region }}</td>
-                  <td class="text-right num-col">{{ row.shipments }}</td>
-                  <td class="text-right num-col" :class="row.onTimeClass">{{ row.onTime }}</td>
-                </tr>
-              </tbody>
-            </v-table>
-          </div>
-        </v-card>
-      </v-col>
-    </v-row>
-
-    <v-row class="exceptions-row" style="width: 100%">
-      <v-col cols="12" class="exceptions-col" style="min-width: 0">
-        <v-card flat class="panel-card">
-          <div class="panel-content pa-6">
-            <div class="panel-header mb-4">
-              <span class="panel-title">Open Exceptions</span>
-              <span class="panel-sub">Recent events sorted by severity and recency</span>
-            </div>
-            <v-table density="compact" class="exceptions-table">
-              <thead>
-                <tr>
-                  <th class="text-left col-shipment-id">Shipment ID</th>
-                  <th class="text-left col-region">Region</th>
-                  <th class="text-left col-type">Type</th>
-                  <th class="text-left col-severity">Severity</th>
-                  <th class="text-left col-period">Period</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="ex in exceptionRows" :key="ex.id" class="data-row">
-                  <td class="font-weight-medium col-shipment-id id-code">{{ ex.id }}</td>
-                  <td class="col-region">{{ ex.region }}</td>
-                  <td class="col-type">{{ ex.type }}</td>
-                  <td class="col-severity">
-                    <span class="severity-badge" :class="`severity-${ex.severity.toLowerCase()}`">{{ ex.severity }}</span>
-                  </td>
-                  <td class="text-medium-emphasis col-period period-code">{{ ex.period }}</td>
-                </tr>
-              </tbody>
-            </v-table>
-          </div>
-        </v-card>
-      </v-col>
-    </v-row>
   </v-container>
 </template>
 
@@ -400,16 +402,21 @@ const exceptionRows = computed(() =>
 
 <style scoped>
 .dashboard-content {
-  padding: 24px;
+  padding: 40px 24px 72px;
   background: var(--ff-page-bg);
+}
+
+.dashboard-shell {
+  max-width: 1360px;
+  margin: 0 auto;
 }
 
 .context-line {
   display: flex;
-  gap: 24px;
+  gap: 28px;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 24px;
+  margin-bottom: 40px;
 }
 
 .context-item {
@@ -428,7 +435,8 @@ const exceptionRows = computed(() =>
 }
 
 .metric-row {
-  gap: 24px;
+  gap: 32px;
+  margin-bottom: 52px;
 }
 
 .metric-col {
@@ -437,7 +445,8 @@ const exceptionRows = computed(() =>
 }
 
 .chart-row {
-  gap: 24px;
+  gap: 32px;
+  margin-bottom: 56px;
 }
 
 .chart-col,
@@ -447,7 +456,7 @@ const exceptionRows = computed(() =>
 }
 
 .exceptions-row {
-  gap: 24px;
+  gap: 32px;
 }
 
 .exceptions-col {
@@ -469,29 +478,38 @@ const exceptionRows = computed(() =>
   display: flex;
   flex-direction: column;
   flex: 1;
+  padding: 24px !important;
 }
 
 .panel-header {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
+  flex-direction: column;
   gap: 12px;
-  margin-bottom: 0;
+  margin-bottom: 20px;
   padding-left: 2px;
 }
 
 .panel-title {
-  font-size: 1rem;
+  font-size: 1.375rem;
   font-weight: 700;
+  line-height: 1.25;
   color: var(--ff-text);
 }
 
 .panel-sub {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: #607080;
+  line-height: 1.45;
 }
 
 .trend-chart-wrap {
-  height: 255px;
+  height: 250px;
+}
+
+.region-table,
+.exceptions-table {
+  margin-top: 4px;
 }
 
 .region-table thead th,
