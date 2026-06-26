@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar flat color="primary" height="64">
+  <v-app-bar flat color="primary-darken-1" height="66" class="top-bar">
     <v-app-bar-title>
       <span class="app-title">FastForward Logistics</span>
       <span class="app-subtitle"> - Operations</span>
@@ -15,7 +15,7 @@
         density="compact"
         class="region-filter"
         prepend-inner-icon="mdi-map-marker-outline"
-        bg-color="primary-darken-1"
+        bg-color="primary"
         base-color="white"
       />
     </template>
@@ -23,14 +23,19 @@
 
   <v-main class="dashboard-main">
     <v-container fluid class="pa-6">
+      <div class="context-line mb-4">
+        <div class="context-item">
+          <span class="context-label">Scope</span>
+          <strong>{{ selectedRegionLabel }}</strong>
+        </div>
+        <div class="context-item">
+          <span class="context-label">Last Updated</span>
+          <strong>{{ latestPeriodLabel }}</strong>
+        </div>
+      </div>
+
       <v-row class="mb-6">
-        <v-col
-          v-for="tile in metricTiles"
-          :key="tile.label"
-          cols="12"
-          sm="6"
-          lg="3"
-        >
+        <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" lg="3">
           <MetricCard
             :label="tile.label"
             :value="tile.value"
@@ -44,36 +49,36 @@
 
       <v-row class="mb-6">
         <v-col cols="12" lg="8">
-          <v-card flat class="pa-5 panel-card" height="340">
+          <v-card flat class="pa-5 panel-card" height="348">
             <div class="panel-header">
               <span class="panel-title">On-Time Delivery Rate</span>
-              <span class="panel-sub">Last 12 weeks</span>
+              <span class="panel-sub">12-week trend, filtered by scope</span>
             </div>
-            <div class="trend-chart-wrap mt-4">
+            <div class="trend-chart-wrap mt-3">
               <Line :data="trendChartData" :options="trendChartOptions" />
             </div>
           </v-card>
         </v-col>
 
         <v-col cols="12" lg="4">
-          <v-card flat class="pa-5 panel-card" height="340">
+          <v-card flat class="pa-5 panel-card" height="348">
             <div class="panel-header">
               <span class="panel-title">Regional Performance</span>
-              <span class="panel-sub">Shipments and on-time %</span>
+              <span class="panel-sub">Weekly shipments and on-time %</span>
             </div>
             <v-table density="compact" class="mt-3 region-table">
               <thead>
                 <tr>
                   <th class="text-left">Region</th>
-                  <th class="text-right">Shipments</th>
-                  <th class="text-right">On-Time</th>
+                  <th class="text-right num-col">Shipments</th>
+                  <th class="text-right num-col">On-Time</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="row in regionalRows" :key="row.region">
+                <tr v-for="row in regionalRows" :key="row.region" class="data-row">
                   <td>{{ row.region }}</td>
-                  <td class="text-right">{{ row.shipments }}</td>
-                  <td class="text-right" :class="row.onTimeClass">{{ row.onTime }}</td>
+                  <td class="text-right num-col">{{ row.shipments }}</td>
+                  <td class="text-right num-col" :class="row.onTimeClass">{{ row.onTime }}</td>
                 </tr>
               </tbody>
             </v-table>
@@ -86,7 +91,7 @@
           <v-card flat class="pa-5 panel-card">
             <div class="panel-header mb-3">
               <span class="panel-title">Open Exceptions</span>
-              <span class="panel-sub">Requires attention</span>
+              <span class="panel-sub">Recent events sorted by severity and recency</span>
             </div>
             <v-table density="comfortable" class="exceptions-table">
               <thead>
@@ -99,7 +104,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="ex in exceptionRows" :key="ex.id">
+                <tr v-for="ex in exceptionRows" :key="ex.id" class="data-row">
                   <td class="font-weight-medium">{{ ex.id }}</td>
                   <td>{{ ex.region }}</td>
                   <td>{{ ex.type }}</td>
@@ -195,6 +200,15 @@ const selectedRegionExists = computed(
 
 const activeRegion = computed(() => (selectedRegionExists.value ? selectedRegion.value : 'all'))
 
+const selectedRegionLabel = computed(() => {
+  if (activeRegion.value === 'all') {
+    return 'All Regions'
+  }
+  return activeRegion.value
+})
+
+const latestPeriodLabel = computed(() => metrics.periods[metrics.periods.length - 1] ?? '-')
+
 function aggregateWeek(week: WeeklyRecord, region: string): AggregatedMetrics {
   if (region !== 'all') {
     const regionMetrics = week.byRegion[region] ?? emptyRegionMetrics
@@ -223,9 +237,9 @@ function aggregateWeek(week: WeeklyRecord, region: string): AggregatedMetrics {
   return {
     period: week.period,
     shipments: totalShipments,
-    onTimePct: weightedOnTime / totalShipments,
+    onTimePct: totalShipments > 0 ? weightedOnTime / totalShipments : 0,
     exceptions: totalExceptions,
-    avgTransitDays: weightedTransit / totalShipments,
+    avgTransitDays: totalShipments > 0 ? weightedTransit / totalShipments : 0,
   }
 }
 
@@ -298,13 +312,13 @@ const trendChartData = computed(() => ({
     {
       label: 'On-Time %',
       data: weeklySeries.value.map((entry) => Number(entry.onTimePct.toFixed(2))),
-      borderColor: '#006D77',
-      backgroundColor: 'rgba(0, 109, 119, 0.16)',
+      borderColor: '#2F6F73',
+      backgroundColor: 'rgba(47, 111, 115, 0.14)',
       fill: true,
-      tension: 0.3,
-      pointRadius: 3,
+      tension: 0.34,
+      pointRadius: 2.5,
       pointHoverRadius: 5,
-      pointBackgroundColor: '#006D77',
+      pointBackgroundColor: '#2F6F73',
     },
   ],
 }))
@@ -331,18 +345,18 @@ const trendChartOptions: ChartOptions<'line'> = {
         display: false,
       },
       ticks: {
-        color: '#6b7480',
+        color: '#6d7780',
       },
     },
     y: {
-      min: 75,
-      max: 100,
+      min: 78,
+      max: 96,
       ticks: {
-        color: '#6b7480',
+        color: '#6d7780',
         callback: (value) => `${value}%`,
       },
       grid: {
-        color: '#e6e9ee',
+        color: '#e3e8eb',
       },
     },
   },
@@ -363,7 +377,7 @@ const regionalRows = computed(() => {
     let onTimeClass = 'status-bad'
     if (onTime >= 92) {
       onTimeClass = 'status-good'
-    } else if (onTime >= 86) {
+    } else if (onTime >= 88) {
       onTimeClass = 'status-ok'
     }
 
@@ -385,7 +399,7 @@ const severityRank: Record<Severity, number> = {
 const severityColor: Record<Severity, string> = {
   high: 'error',
   medium: 'warning',
-  low: 'success',
+  low: 'low',
 }
 
 const exceptionRows = computed(() =>
@@ -397,7 +411,7 @@ const exceptionRows = computed(() =>
       }
       return severityRank[b.severity] - severityRank[a.severity]
     })
-    .slice(0, 12)
+    .slice(0, 14)
     .map((item) => ({
       ...item,
       severity: item.severity.charAt(0).toUpperCase() + item.severity.slice(1),
@@ -408,7 +422,11 @@ const exceptionRows = computed(() =>
 
 <style scoped>
 .dashboard-main {
-  background-color: #f4f5f7;
+  background: #f6f7f5;
+}
+
+.top-bar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .app-title {
@@ -419,15 +437,15 @@ const exceptionRows = computed(() =>
 }
 
 .app-subtitle {
-  font-size: 1.05rem;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .region-filter {
-  min-width: 220px;
-  max-width: 240px;
-  margin-right: 12px;
+  min-width: 230px;
+  max-width: 250px;
+  margin-right: 10px;
   color: white;
 }
 
@@ -437,9 +455,32 @@ const exceptionRows = computed(() =>
   color: white !important;
 }
 
+.context-line {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.context-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #4f5d68;
+}
+
+.context-label {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.68rem;
+  color: #78848f;
+}
+
 .panel-card {
-  border-radius: 8px;
-  border: 1px solid #e0e3e8;
+  border-radius: 10px;
+  border: 1px solid #dce2e5;
+  box-shadow: 0 2px 10px rgba(23, 41, 57, 0.05);
 }
 
 .panel-header {
@@ -452,38 +493,54 @@ const exceptionRows = computed(() =>
 .panel-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #1a2332;
+  color: #1f2a33;
 }
 
 .panel-sub {
-  font-size: 0.78rem;
-  color: #6b7480;
+  font-size: 0.77rem;
+  color: #67747f;
 }
 
 .trend-chart-wrap {
-  height: 245px;
+  height: 255px;
 }
 
 .region-table thead th,
 .exceptions-table thead th {
-  font-size: 0.72rem;
+  font-size: 0.69rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #6b7480;
-  font-weight: 600;
+  color: #6b7782;
+  font-weight: 700;
+  border-bottom: 1px solid #e0e6ea;
+}
+
+.num-col {
+  font-variant-numeric: tabular-nums;
+}
+
+:deep(.region-table tbody tr:nth-child(even)),
+:deep(.exceptions-table tbody tr:nth-child(even)) {
+  background: rgba(233, 237, 232, 0.35);
+}
+
+:deep(.region-table tbody tr:hover),
+:deep(.exceptions-table tbody tr:hover) {
+  background: rgba(47, 111, 115, 0.06);
 }
 
 .status-good {
-  color: #2e7d32;
-  font-weight: 600;
+  color: #587c74;
+  font-weight: 700;
 }
 
 .status-ok {
-  color: #1a2332;
+  color: #4f5d68;
+  font-weight: 600;
 }
 
 .status-bad {
-  color: #c62828;
-  font-weight: 600;
+  color: #bf655e;
+  font-weight: 700;
 }
 </style>
