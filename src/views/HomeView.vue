@@ -435,13 +435,12 @@ const exceptionRows = computed(() =>
 }
 
 .metric-row {
-  gap: 32px;
+  row-gap: 16px;
   margin-bottom: 52px;
 }
 
 .metric-col {
   display: flex;
-  width: 100%;
 }
 
 .chart-row {
