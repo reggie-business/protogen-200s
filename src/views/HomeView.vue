@@ -409,6 +409,7 @@ const exceptionRows = computed(() =>
 .dashboard-shell {
   max-width: 1360px;
   margin: 0 auto;
+  padding-top: 4px;
 }
 
 .context-line {
@@ -416,7 +417,9 @@ const exceptionRows = computed(() =>
   gap: 28px;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 40px;
+  margin: 0 0 36px;
+  padding: 10px 2px 14px;
+  border-bottom: 1px solid var(--ff-border);
 }
 
 .context-item {
@@ -425,6 +428,12 @@ const exceptionRows = computed(() =>
   gap: 8px;
   font-size: 0.875rem;
   color: #495867;
+}
+
+.context-item strong {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ff-text);
 }
 
 .context-label {
