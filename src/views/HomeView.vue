@@ -75,7 +75,7 @@
               <span class="panel-title">Open Exceptions</span>
               <span class="panel-sub">Recent events sorted by severity and recency</span>
             </div>
-            <v-table density="comfortable" class="exceptions-table">
+            <v-table density="compact" class="exceptions-table">
               <thead>
                 <tr>
                   <th class="text-left col-shipment-id">Shipment ID</th>
@@ -87,13 +87,13 @@
               </thead>
               <tbody>
                 <tr v-for="ex in exceptionRows" :key="ex.id" class="data-row">
-                  <td class="font-weight-medium col-shipment-id">{{ ex.id }}</td>
+                  <td class="font-weight-medium col-shipment-id id-code">{{ ex.id }}</td>
                   <td class="col-region">{{ ex.region }}</td>
                   <td class="col-type">{{ ex.type }}</td>
                   <td class="col-severity">
-                    <v-chip size="small" :color="ex.severityColor" variant="tonal">{{ ex.severity }}</v-chip>
+                    <span class="severity-badge" :class="`severity-${ex.severity.toLowerCase()}`">{{ ex.severity }}</span>
                   </td>
-                  <td class="text-medium-emphasis col-period">{{ ex.period }}</td>
+                  <td class="text-medium-emphasis col-period period-code">{{ ex.period }}</td>
                 </tr>
               </tbody>
             </v-table>
@@ -289,13 +289,13 @@ const trendChartData = computed(() => ({
     {
       label: 'On-Time %',
       data: weeklySeries.value.map((entry) => Number(entry.onTimePct.toFixed(2))),
-      borderColor: '#2F6F73',
-      backgroundColor: 'rgba(47, 111, 115, 0.14)',
+      borderColor: '#1B2733',
+      backgroundColor: 'rgba(27, 39, 51, 0.08)',
       fill: true,
-      tension: 0.34,
-      pointRadius: 2.5,
-      pointHoverRadius: 5,
-      pointBackgroundColor: '#2F6F73',
+      tension: 0.3,
+      pointRadius: 2,
+      pointHoverRadius: 4,
+      pointBackgroundColor: '#1B2733',
     },
   ],
 }))
@@ -322,18 +322,26 @@ const trendChartOptions: ChartOptions<'line'> = {
         display: false,
       },
       ticks: {
-        color: '#6d7780',
+        color: '#5f6b77',
+        font: {
+          size: 12,
+          family: 'Inter',
+        },
       },
     },
     y: {
       min: 78,
       max: 96,
       ticks: {
-        color: '#6d7780',
+        color: '#5f6b77',
+        font: {
+          size: 12,
+          family: 'Inter',
+        },
         callback: (value) => `${value}%`,
       },
       grid: {
-        color: '#e3e8eb',
+        color: '#E2E6EB',
       },
     },
   },
@@ -373,12 +381,6 @@ const severityRank: Record<Severity, number> = {
   low: 1,
 }
 
-const severityColor: Record<Severity, string> = {
-  high: 'error',
-  medium: 'warning',
-  low: 'low',
-}
-
 const exceptionRows = computed(() =>
   metrics.exceptions
     .filter((item) => activeRegion.value === 'all' || item.region === activeRegion.value)
@@ -392,7 +394,6 @@ const exceptionRows = computed(() =>
     .map((item) => ({
       ...item,
       severity: item.severity.charAt(0).toUpperCase() + item.severity.slice(1),
-      severityColor: severityColor[item.severity],
     })),
 )
 </script>
@@ -400,7 +401,7 @@ const exceptionRows = computed(() =>
 <style scoped>
 .dashboard-content {
   padding: 24px;
-  background: #f6f7f5;
+  background: var(--ff-page-bg);
 }
 
 .context-line {
@@ -415,15 +416,15 @@ const exceptionRows = computed(() =>
   display: flex;
   align-items: baseline;
   gap: 8px;
-  font-size: 0.82rem;
-  color: #4f5d68;
+  font-size: 0.875rem;
+  color: #495867;
 }
 
 .context-label {
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.68rem;
-  color: #78848f;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: #607080;
 }
 
 .metric-row {
@@ -455,12 +456,13 @@ const exceptionRows = computed(() =>
 }
 
 .panel-card {
-  border-radius: 10px;
-  border: 1px solid #dce2e5;
-  box-shadow: 0 2px 10px rgba(23, 41, 57, 0.05);
+  border-radius: 6px;
+  border: 1px solid var(--ff-border);
+  box-shadow: 0 1px 3px rgba(27, 39, 51, 0.04);
   display: flex;
   flex-direction: column;
   width: 100%;
+  background: var(--ff-surface);
 }
 
 .panel-content {
@@ -472,19 +474,20 @@ const exceptionRows = computed(() =>
 .panel-header {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 0;
+  padding-left: 2px;
 }
 
 .panel-title {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #1f2a33;
+  color: var(--ff-text);
 }
 
 .panel-sub {
-  font-size: 0.77rem;
-  color: #67747f;
+  font-size: 0.75rem;
+  color: #607080;
 }
 
 .trend-chart-wrap {
@@ -493,13 +496,18 @@ const exceptionRows = computed(() =>
 
 .region-table thead th,
 .exceptions-table thead th {
-  font-size: 0.69rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #6b7782;
+  letter-spacing: 0.08em;
+  color: #5f6b77;
   font-weight: 700;
-  border-bottom: 1px solid #e0e6ea;
+  border-bottom: 1px solid var(--ff-border);
   padding: 0 12px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--ff-surface);
+  height: 34px;
 }
 
 .region-table thead th:first-child,
@@ -515,6 +523,9 @@ const exceptionRows = computed(() =>
 :deep(.region-table tbody td),
 :deep(.exceptions-table tbody td) {
   padding: 0 12px;
+  font-size: 0.875rem;
+  color: var(--ff-text);
+  height: 34px;
 }
 
 :deep(.region-table tbody td:first-child),
@@ -533,27 +544,64 @@ const exceptionRows = computed(() =>
 
 :deep(.region-table tbody tr:nth-child(even)),
 :deep(.exceptions-table tbody tr:nth-child(even)) {
-  background: rgba(233, 237, 232, 0.35);
+  background: #fafbfd;
 }
 
 :deep(.region-table tbody tr:hover),
 :deep(.exceptions-table tbody tr:hover) {
-  background: rgba(47, 111, 115, 0.06);
+  background: rgba(27, 39, 51, 0.04);
 }
 
 .status-good {
-  color: #587c74;
+  color: var(--ff-success);
   font-weight: 700;
 }
 
 .status-ok {
-  color: #4f5d68;
+  color: #7a6a2a;
   font-weight: 600;
 }
 
 .status-bad {
-  color: #bf655e;
+  color: var(--ff-error);
   font-weight: 700;
+}
+
+.id-code,
+.period-code {
+  font-family: var(--ff-mono);
+  letter-spacing: 0.01em;
+}
+
+.severity-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  line-height: 1.2;
+}
+
+.severity-high {
+  color: var(--ff-error);
+  background: rgba(211, 47, 47, 0.09);
+  border-color: rgba(211, 47, 47, 0.22);
+}
+
+.severity-medium {
+  color: #8f6200;
+  background: rgba(249, 168, 37, 0.14);
+  border-color: rgba(249, 168, 37, 0.35);
+}
+
+.severity-low {
+  color: #607080;
+  background: rgba(96, 112, 128, 0.1);
+  border-color: rgba(96, 112, 128, 0.28);
 }
 
 /* Exceptions table column widths */

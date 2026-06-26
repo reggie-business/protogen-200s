@@ -7,10 +7,28 @@
   padding: 0;
 }
 
+:root {
+  --ff-text: #1b2733;
+  --ff-page-bg: #f7f8fa;
+  --ff-surface: #ffffff;
+  --ff-border: #e2e6eb;
+  --ff-accent: #ff5722;
+  --ff-success: #2e7d32;
+  --ff-warning: #f9a825;
+  --ff-error: #d32f2f;
+  --ff-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+}
+
 html,
 body {
   height: 100%;
   font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-  background-color: #f4f5f7;
-  color: #1a2332;
+  background-color: var(--ff-page-bg);
+  color: var(--ff-text);
+  line-height: 1.5;
+}
+
+#app {
+  min-height: 100%;
 }

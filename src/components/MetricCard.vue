@@ -44,31 +44,33 @@ const trendClass = computed(() => {
 
 <style scoped>
 .metric-card {
-  border-radius: 10px;
-  border: 1px solid #dbe1e4;
-  box-shadow: 0 2px 8px rgba(24, 39, 55, 0.04);
+  border-radius: 6px;
+  border: 1px solid var(--ff-border);
+  box-shadow: 0 1px 3px rgba(27, 39, 51, 0.04);
   padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: var(--ff-surface);
 }
 
 .metric-label {
-  font-size: 0.69rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #6f7b85;
+  letter-spacing: 0.09em;
+  color: #5f6b77;
   margin-bottom: 12px;
 }
 
 .metric-value {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 700;
-  color: #1f2a33;
-  line-height: 1.1;
+  color: var(--ff-text);
+  line-height: 1.05;
   margin-bottom: 12px;
   word-break: break-word;
+  font-variant-numeric: tabular-nums;
 }
 
 .metric-unit {
@@ -79,33 +81,37 @@ const trendClass = computed(() => {
 .metric-trend {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 4px 12px;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 4px;
+  padding: 3px 8px;
   width: fit-content;
+  border: 1px solid transparent;
 }
 
 .metric-period {
   font-weight: 500;
-  color: #6f7b85;
-  margin-left: 2px;
+  color: #667483;
+  margin-left: 4px;
 }
 
 .trend-good {
-  color: #587c74;
-  background: rgba(138, 167, 160, 0.16);
+  color: var(--ff-success);
+  background: rgba(46, 125, 50, 0.08);
+  border-color: rgba(46, 125, 50, 0.2);
 }
 
 .trend-bad {
-  color: #b85c56;
-  background: rgba(207, 106, 99, 0.14);
+  color: var(--ff-error);
+  background: rgba(211, 47, 47, 0.08);
+  border-color: rgba(211, 47, 47, 0.2);
 }
 
 .trend-flat {
-  color: #677782;
-  background: rgba(103, 119, 130, 0.1);
+  color: #607080;
+  background: rgba(96, 112, 128, 0.08);
+  border-color: rgba(96, 112, 128, 0.2);
 }
 </style>
 

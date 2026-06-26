@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar flat color="primary-darken-1" height="66" class="top-bar" v-if="isUnlocked">
+    <v-app-bar flat color="#1B2733" height="64" class="top-bar" v-if="isUnlocked">
       <v-app-bar-title>
         <span class="app-title">FastForward Logistics</span>
         <span class="app-subtitle"> - Operations</span>
@@ -11,13 +11,12 @@
           :items="regionOptions"
           item-title="label"
           item-value="value"
-          variant="solo-filled"
+          variant="outlined"
           hide-details
           density="compact"
           class="region-filter"
           prepend-inner-icon="mdi-map-marker-outline"
-          bg-color="primary"
-          base-color="white"
+          bg-color="white"
         />
       </template>
     </v-app-bar>
@@ -101,47 +100,71 @@ onMounted(() => {
 
 <style scoped>
 .dashboard-main {
-  background: #f6f7f5;
+  background: var(--ff-page-bg);
 }
 
 .gate-main {
-  background-color: #f4f5f7;
+  background-color: var(--ff-page-bg);
 }
 
 .top-bar {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(226, 230, 235, 0.18);
 }
 
 .app-title {
-  font-size: 1.05rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
 }
 
 .app-subtitle {
-  font-size: 1.02rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .region-filter {
-  min-width: 230px;
-  max-width: 250px;
-  margin-right: 10px;
-  color: white;
+  min-width: 232px;
+  max-width: 252px;
+  margin-right: 8px;
 }
 
-:deep(.region-filter .v-field__input),
+:deep(.region-filter .v-field) {
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+:deep(.region-filter .v-field__outline) {
+  --v-field-border-opacity: 1;
+  color: var(--ff-border);
+}
+
+:deep(.region-filter .v-field--focused .v-field__outline) {
+  color: var(--ff-accent);
+}
+
 :deep(.region-filter .v-select__selection-text),
+:deep(.region-filter .v-field__input),
 :deep(.region-filter .v-icon) {
-  color: white !important;
+  color: var(--ff-text);
+}
+
+:deep(.v-overlay .v-list-item--active) {
+  background: rgba(255, 87, 34, 0.1);
+}
+
+:deep(.v-overlay .v-list-item--active .v-list-item-title) {
+  color: var(--ff-accent);
+  font-weight: 600;
 }
 
 .gate-card {
-  border: 1px solid #e0e3e8;
-  border-radius: 10px;
+  border: 1px solid var(--ff-border);
+  border-radius: 6px;
   padding: 32px;
+  box-shadow: 0 1px 3px rgba(27, 39, 51, 0.06);
 }
 
 .gate-header {
@@ -151,19 +174,19 @@ onMounted(() => {
 .gate-title {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #1a2332;
+  color: var(--ff-text);
   margin-bottom: 4px;
 }
 
 .gate-subtitle {
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #2f6f73;
+  color: #495867;
 }
 
 .gate-note {
-  color: #5f6874;
-  font-size: 0.9rem;
+  color: #5f6b77;
+  font-size: 0.875rem;
   margin: 0 0 24px 0;
 }
 
@@ -174,10 +197,30 @@ onMounted(() => {
 }
 
 :deep(.access-input .v-field__outline) {
-  border-width: 1px;
+  --v-field-border-opacity: 1;
+  color: var(--ff-border);
 }
 
 :deep(.access-input .v-field__input) {
   padding-left: 12px;
+}
+
+:deep(.access-input .v-field--focused .v-field__outline) {
+  color: #6b7785;
+}
+
+:deep(.access-input .v-label) {
+  color: #5f6b77;
+}
+
+:deep(.access-input .v-icon) {
+  color: #5f6b77;
+}
+
+:deep(.gate-form .v-btn) {
+  background: var(--ff-accent) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 </style>
