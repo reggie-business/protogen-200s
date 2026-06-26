@@ -1,5 +1,11 @@
 {
-  "regions": ["Midwest", "Northeast", "South", "West", "Mountain"],
+  "regions": [
+    "Midwest",
+    "Northeast",
+    "South",
+    "West",
+    "Mountain"
+  ],
   "periods": [
     "2026-W15",
     "2026-W16",
@@ -18,175 +24,784 @@
     {
       "period": "2026-W15",
       "byRegion": {
-        "Midwest": { "shipments": 2485, "onTimePct": 94.1, "exceptions": 13, "avgTransitDays": 2.5 },
-        "Northeast": { "shipments": 2290, "onTimePct": 93.5, "exceptions": 15, "avgTransitDays": 2.7 },
-        "South": { "shipments": 2115, "onTimePct": 90.6, "exceptions": 23, "avgTransitDays": 3.2 },
-        "West": { "shipments": 2185, "onTimePct": 89.8, "exceptions": 25, "avgTransitDays": 3.4 },
-        "Mountain": { "shipments": 1825, "onTimePct": 86.9, "exceptions": 31, "avgTransitDays": 3.9 }
+        "Midwest": {
+          "shipments": 2485,
+          "onTimePct": 94.1,
+          "exceptions": 13,
+          "avgTransitDays": 2.5
+        },
+        "Northeast": {
+          "shipments": 2290,
+          "onTimePct": 93.5,
+          "exceptions": 15,
+          "avgTransitDays": 2.7
+        },
+        "South": {
+          "shipments": 2115,
+          "onTimePct": 90.6,
+          "exceptions": 23,
+          "avgTransitDays": 3.2
+        },
+        "West": {
+          "shipments": 2185,
+          "onTimePct": 89.8,
+          "exceptions": 25,
+          "avgTransitDays": 3.4
+        },
+        "Mountain": {
+          "shipments": 1825,
+          "onTimePct": 86.9,
+          "exceptions": 31,
+          "avgTransitDays": 3.9
+        }
       }
     },
     {
       "period": "2026-W16",
       "byRegion": {
-        "Midwest": { "shipments": 2530, "onTimePct": 94.4, "exceptions": 12, "avgTransitDays": 2.4 },
-        "Northeast": { "shipments": 2335, "onTimePct": 93.2, "exceptions": 17, "avgTransitDays": 2.8 },
-        "South": { "shipments": 2050, "onTimePct": 90.0, "exceptions": 25, "avgTransitDays": 3.3 },
-        "West": { "shipments": 2260, "onTimePct": 90.5, "exceptions": 22, "avgTransitDays": 3.2 },
-        "Mountain": { "shipments": 1890, "onTimePct": 86.2, "exceptions": 34, "avgTransitDays": 4.0 }
+        "Midwest": {
+          "shipments": 2530,
+          "onTimePct": 94.4,
+          "exceptions": 12,
+          "avgTransitDays": 2.4
+        },
+        "Northeast": {
+          "shipments": 2335,
+          "onTimePct": 93.2,
+          "exceptions": 17,
+          "avgTransitDays": 2.8
+        },
+        "South": {
+          "shipments": 2050,
+          "onTimePct": 90,
+          "exceptions": 25,
+          "avgTransitDays": 3.3
+        },
+        "West": {
+          "shipments": 2260,
+          "onTimePct": 90.5,
+          "exceptions": 22,
+          "avgTransitDays": 3.2
+        },
+        "Mountain": {
+          "shipments": 1890,
+          "onTimePct": 86.2,
+          "exceptions": 34,
+          "avgTransitDays": 4
+        }
       }
     },
     {
       "period": "2026-W17",
       "byRegion": {
-        "Midwest": { "shipments": 2410, "onTimePct": 93.8, "exceptions": 14, "avgTransitDays": 2.6 },
-        "Northeast": { "shipments": 2380, "onTimePct": 93.9, "exceptions": 14, "avgTransitDays": 2.7 },
-        "South": { "shipments": 2195, "onTimePct": 90.8, "exceptions": 21, "avgTransitDays": 3.1 },
-        "West": { "shipments": 2215, "onTimePct": 90.2, "exceptions": 23, "avgTransitDays": 3.3 },
-        "Mountain": { "shipments": 1950, "onTimePct": 85.8, "exceptions": 36, "avgTransitDays": 4.1 }
+        "Midwest": {
+          "shipments": 2410,
+          "onTimePct": 93.8,
+          "exceptions": 14,
+          "avgTransitDays": 2.6
+        },
+        "Northeast": {
+          "shipments": 2380,
+          "onTimePct": 93.9,
+          "exceptions": 14,
+          "avgTransitDays": 2.7
+        },
+        "South": {
+          "shipments": 2195,
+          "onTimePct": 90.8,
+          "exceptions": 21,
+          "avgTransitDays": 3.1
+        },
+        "West": {
+          "shipments": 2215,
+          "onTimePct": 90.2,
+          "exceptions": 23,
+          "avgTransitDays": 3.3
+        },
+        "Mountain": {
+          "shipments": 1950,
+          "onTimePct": 85.8,
+          "exceptions": 36,
+          "avgTransitDays": 4.1
+        }
       }
     },
     {
       "period": "2026-W18",
       "byRegion": {
-        "Midwest": { "shipments": 2595, "onTimePct": 94.6, "exceptions": 11, "avgTransitDays": 2.4 },
-        "Northeast": { "shipments": 2305, "onTimePct": 92.9, "exceptions": 18, "avgTransitDays": 2.9 },
-        "South": { "shipments": 2140, "onTimePct": 89.9, "exceptions": 26, "avgTransitDays": 3.4 },
-        "West": { "shipments": 2295, "onTimePct": 91.1, "exceptions": 20, "avgTransitDays": 3.2 },
-        "Mountain": { "shipments": 1875, "onTimePct": 85.0, "exceptions": 40, "avgTransitDays": 4.2 }
+        "Midwest": {
+          "shipments": 2595,
+          "onTimePct": 94.6,
+          "exceptions": 11,
+          "avgTransitDays": 2.4
+        },
+        "Northeast": {
+          "shipments": 2305,
+          "onTimePct": 92.9,
+          "exceptions": 18,
+          "avgTransitDays": 2.9
+        },
+        "South": {
+          "shipments": 2140,
+          "onTimePct": 89.9,
+          "exceptions": 26,
+          "avgTransitDays": 3.4
+        },
+        "West": {
+          "shipments": 2295,
+          "onTimePct": 91.1,
+          "exceptions": 20,
+          "avgTransitDays": 3.2
+        },
+        "Mountain": {
+          "shipments": 1875,
+          "onTimePct": 85,
+          "exceptions": 40,
+          "avgTransitDays": 4.2
+        }
       }
     },
     {
       "period": "2026-W19",
       "byRegion": {
-        "Midwest": { "shipments": 2640, "onTimePct": 94.8, "exceptions": 10, "avgTransitDays": 2.3 },
-        "Northeast": { "shipments": 2415, "onTimePct": 93.6, "exceptions": 15, "avgTransitDays": 2.7 },
-        "South": { "shipments": 2225, "onTimePct": 90.4, "exceptions": 24, "avgTransitDays": 3.3 },
-        "West": { "shipments": 2335, "onTimePct": 90.9, "exceptions": 21, "avgTransitDays": 3.2 },
-        "Mountain": { "shipments": 2010, "onTimePct": 84.7, "exceptions": 43, "avgTransitDays": 4.3 }
+        "Midwest": {
+          "shipments": 2640,
+          "onTimePct": 94.8,
+          "exceptions": 10,
+          "avgTransitDays": 2.3
+        },
+        "Northeast": {
+          "shipments": 2415,
+          "onTimePct": 93.6,
+          "exceptions": 15,
+          "avgTransitDays": 2.7
+        },
+        "South": {
+          "shipments": 2225,
+          "onTimePct": 90.4,
+          "exceptions": 24,
+          "avgTransitDays": 3.3
+        },
+        "West": {
+          "shipments": 2335,
+          "onTimePct": 90.9,
+          "exceptions": 21,
+          "avgTransitDays": 3.2
+        },
+        "Mountain": {
+          "shipments": 2010,
+          "onTimePct": 84.7,
+          "exceptions": 43,
+          "avgTransitDays": 4.3
+        }
       }
     },
     {
       "period": "2026-W20",
       "byRegion": {
-        "Midwest": { "shipments": 2515, "onTimePct": 94.0, "exceptions": 13, "avgTransitDays": 2.5 },
-        "Northeast": { "shipments": 2470, "onTimePct": 93.3, "exceptions": 16, "avgTransitDays": 2.8 },
-        "South": { "shipments": 2160, "onTimePct": 90.1, "exceptions": 25, "avgTransitDays": 3.3 },
-        "West": { "shipments": 2405, "onTimePct": 91.3, "exceptions": 19, "avgTransitDays": 3.1 },
-        "Mountain": { "shipments": 2055, "onTimePct": 84.2, "exceptions": 45, "avgTransitDays": 4.4 }
+        "Midwest": {
+          "shipments": 2515,
+          "onTimePct": 94,
+          "exceptions": 13,
+          "avgTransitDays": 2.5
+        },
+        "Northeast": {
+          "shipments": 2470,
+          "onTimePct": 93.3,
+          "exceptions": 16,
+          "avgTransitDays": 2.8
+        },
+        "South": {
+          "shipments": 2160,
+          "onTimePct": 90.1,
+          "exceptions": 25,
+          "avgTransitDays": 3.3
+        },
+        "West": {
+          "shipments": 2405,
+          "onTimePct": 91.3,
+          "exceptions": 19,
+          "avgTransitDays": 3.1
+        },
+        "Mountain": {
+          "shipments": 2055,
+          "onTimePct": 84.2,
+          "exceptions": 45,
+          "avgTransitDays": 4.4
+        }
       }
     },
     {
       "period": "2026-W21",
       "byRegion": {
-        "Midwest": { "shipments": 2685, "onTimePct": 94.5, "exceptions": 11, "avgTransitDays": 2.4 },
-        "Northeast": { "shipments": 2390, "onTimePct": 92.8, "exceptions": 19, "avgTransitDays": 2.9 },
-        "South": { "shipments": 2280, "onTimePct": 89.8, "exceptions": 28, "avgTransitDays": 3.5 },
-        "West": { "shipments": 2345, "onTimePct": 90.5, "exceptions": 23, "avgTransitDays": 3.3 },
-        "Mountain": { "shipments": 1970, "onTimePct": 83.5, "exceptions": 49, "avgTransitDays": 4.5 }
+        "Midwest": {
+          "shipments": 2685,
+          "onTimePct": 94.5,
+          "exceptions": 11,
+          "avgTransitDays": 2.4
+        },
+        "Northeast": {
+          "shipments": 2390,
+          "onTimePct": 92.8,
+          "exceptions": 19,
+          "avgTransitDays": 2.9
+        },
+        "South": {
+          "shipments": 2280,
+          "onTimePct": 89.8,
+          "exceptions": 28,
+          "avgTransitDays": 3.5
+        },
+        "West": {
+          "shipments": 2345,
+          "onTimePct": 90.5,
+          "exceptions": 23,
+          "avgTransitDays": 3.3
+        },
+        "Mountain": {
+          "shipments": 1970,
+          "onTimePct": 83.5,
+          "exceptions": 49,
+          "avgTransitDays": 4.5
+        }
       }
     },
     {
       "period": "2026-W22",
       "byRegion": {
-        "Midwest": { "shipments": 2590, "onTimePct": 94.2, "exceptions": 12, "avgTransitDays": 2.5 },
-        "Northeast": { "shipments": 2510, "onTimePct": 93.1, "exceptions": 17, "avgTransitDays": 2.8 },
-        "South": { "shipments": 2215, "onTimePct": 89.1, "exceptions": 31, "avgTransitDays": 3.6 },
-        "West": { "shipments": 2465, "onTimePct": 90.0, "exceptions": 26, "avgTransitDays": 3.4 },
-        "Mountain": { "shipments": 2125, "onTimePct": 83.0, "exceptions": 52, "avgTransitDays": 4.6 }
+        "Midwest": {
+          "shipments": 2590,
+          "onTimePct": 94.2,
+          "exceptions": 12,
+          "avgTransitDays": 2.5
+        },
+        "Northeast": {
+          "shipments": 2510,
+          "onTimePct": 93.1,
+          "exceptions": 17,
+          "avgTransitDays": 2.8
+        },
+        "South": {
+          "shipments": 2215,
+          "onTimePct": 89.1,
+          "exceptions": 31,
+          "avgTransitDays": 3.6
+        },
+        "West": {
+          "shipments": 2465,
+          "onTimePct": 90,
+          "exceptions": 26,
+          "avgTransitDays": 3.4
+        },
+        "Mountain": {
+          "shipments": 2125,
+          "onTimePct": 83,
+          "exceptions": 52,
+          "avgTransitDays": 4.6
+        }
       }
     },
     {
       "period": "2026-W23",
       "byRegion": {
-        "Midwest": { "shipments": 2720, "onTimePct": 94.0, "exceptions": 13, "avgTransitDays": 2.6 },
-        "Northeast": { "shipments": 2440, "onTimePct": 92.5, "exceptions": 20, "avgTransitDays": 3.0 },
-        "South": { "shipments": 2325, "onTimePct": 88.8, "exceptions": 34, "avgTransitDays": 3.7 },
-        "West": { "shipments": 2380, "onTimePct": 89.4, "exceptions": 30, "avgTransitDays": 3.6 },
-        "Mountain": { "shipments": 2060, "onTimePct": 82.2, "exceptions": 58, "avgTransitDays": 4.8 }
+        "Midwest": {
+          "shipments": 2720,
+          "onTimePct": 94,
+          "exceptions": 13,
+          "avgTransitDays": 2.6
+        },
+        "Northeast": {
+          "shipments": 2440,
+          "onTimePct": 92.5,
+          "exceptions": 20,
+          "avgTransitDays": 3
+        },
+        "South": {
+          "shipments": 2325,
+          "onTimePct": 88.8,
+          "exceptions": 34,
+          "avgTransitDays": 3.7
+        },
+        "West": {
+          "shipments": 2380,
+          "onTimePct": 89.4,
+          "exceptions": 30,
+          "avgTransitDays": 3.6
+        },
+        "Mountain": {
+          "shipments": 2060,
+          "onTimePct": 82.2,
+          "exceptions": 58,
+          "avgTransitDays": 4.8
+        }
       }
     },
     {
       "period": "2026-W24",
       "byRegion": {
-        "Midwest": { "shipments": 2665, "onTimePct": 93.6, "exceptions": 15, "avgTransitDays": 2.6 },
-        "Northeast": { "shipments": 2565, "onTimePct": 92.0, "exceptions": 23, "avgTransitDays": 3.1 },
-        "South": { "shipments": 2265, "onTimePct": 88.4, "exceptions": 37, "avgTransitDays": 3.8 },
-        "West": { "shipments": 2505, "onTimePct": 89.0, "exceptions": 33, "avgTransitDays": 3.7 },
-        "Mountain": { "shipments": 2175, "onTimePct": 81.7, "exceptions": 63, "avgTransitDays": 4.9 }
+        "Midwest": {
+          "shipments": 2665,
+          "onTimePct": 93.6,
+          "exceptions": 15,
+          "avgTransitDays": 2.6
+        },
+        "Northeast": {
+          "shipments": 2565,
+          "onTimePct": 92,
+          "exceptions": 23,
+          "avgTransitDays": 3.1
+        },
+        "South": {
+          "shipments": 2265,
+          "onTimePct": 88.4,
+          "exceptions": 37,
+          "avgTransitDays": 3.8
+        },
+        "West": {
+          "shipments": 2505,
+          "onTimePct": 89,
+          "exceptions": 33,
+          "avgTransitDays": 3.7
+        },
+        "Mountain": {
+          "shipments": 2175,
+          "onTimePct": 81.7,
+          "exceptions": 63,
+          "avgTransitDays": 4.9
+        }
       }
     },
     {
       "period": "2026-W25",
       "byRegion": {
-        "Midwest": { "shipments": 2790, "onTimePct": 92.9, "exceptions": 19, "avgTransitDays": 2.8 },
-        "Northeast": { "shipments": 2495, "onTimePct": 91.2, "exceptions": 28, "avgTransitDays": 3.3 },
-        "South": { "shipments": 2360, "onTimePct": 87.8, "exceptions": 41, "avgTransitDays": 4.0 },
-        "West": { "shipments": 2435, "onTimePct": 88.4, "exceptions": 38, "avgTransitDays": 3.8 },
-        "Mountain": { "shipments": 2105, "onTimePct": 80.9, "exceptions": 69, "avgTransitDays": 5.0 }
+        "Midwest": {
+          "shipments": 2790,
+          "onTimePct": 92.9,
+          "exceptions": 19,
+          "avgTransitDays": 2.8
+        },
+        "Northeast": {
+          "shipments": 2495,
+          "onTimePct": 91.2,
+          "exceptions": 28,
+          "avgTransitDays": 3.3
+        },
+        "South": {
+          "shipments": 2360,
+          "onTimePct": 87.8,
+          "exceptions": 41,
+          "avgTransitDays": 4
+        },
+        "West": {
+          "shipments": 2435,
+          "onTimePct": 88.4,
+          "exceptions": 38,
+          "avgTransitDays": 3.8
+        },
+        "Mountain": {
+          "shipments": 2105,
+          "onTimePct": 80.9,
+          "exceptions": 69,
+          "avgTransitDays": 5
+        }
       }
     },
     {
       "period": "2026-W26",
       "byRegion": {
-        "Midwest": { "shipments": 2715, "onTimePct": 92.2, "exceptions": 23, "avgTransitDays": 2.9 },
-        "Northeast": { "shipments": 2590, "onTimePct": 90.8, "exceptions": 31, "avgTransitDays": 3.4 },
-        "South": { "shipments": 2295, "onTimePct": 87.1, "exceptions": 46, "avgTransitDays": 4.1 },
-        "West": { "shipments": 2520, "onTimePct": 87.8, "exceptions": 42, "avgTransitDays": 4.0 },
-        "Mountain": { "shipments": 2195, "onTimePct": 80.1, "exceptions": 76, "avgTransitDays": 5.2 }
+        "Midwest": {
+          "shipments": 2715,
+          "onTimePct": 92.8,
+          "exceptions": 23,
+          "avgTransitDays": 2.8
+        },
+        "Northeast": {
+          "shipments": 2590,
+          "onTimePct": 90.3,
+          "exceptions": 31,
+          "avgTransitDays": 3.6
+        },
+        "South": {
+          "shipments": 2295,
+          "onTimePct": 87.5,
+          "exceptions": 46,
+          "avgTransitDays": 4.3
+        },
+        "West": {
+          "shipments": 2520,
+          "onTimePct": 86.9,
+          "exceptions": 42,
+          "avgTransitDays": 4.2
+        },
+        "Mountain": {
+          "shipments": 2195,
+          "onTimePct": 79.8,
+          "exceptions": 76,
+          "avgTransitDays": 5.1
+        }
       }
     }
   ],
   "exceptions": [
-    { "id": "FF-251041", "weekIndex": 5, "period": "2026-W20", "region": "Midwest", "type": "Address correction", "severity": "low" },
-    { "id": "FF-251055", "weekIndex": 5, "period": "2026-W20", "region": "Northeast", "type": "Routing exception", "severity": "medium" },
-    { "id": "FF-251068", "weekIndex": 5, "period": "2026-W20", "region": "South", "type": "Delayed shipment", "severity": "medium" },
-    { "id": "FF-251074", "weekIndex": 5, "period": "2026-W20", "region": "West", "type": "Weather delay", "severity": "medium" },
-    { "id": "FF-251089", "weekIndex": 5, "period": "2026-W20", "region": "Mountain", "type": "Missed pickup", "severity": "high" },
-
-    { "id": "FF-251101", "weekIndex": 6, "period": "2026-W21", "region": "Northeast", "type": "Address correction", "severity": "low" },
-    { "id": "FF-251114", "weekIndex": 6, "period": "2026-W21", "region": "South", "type": "Customs hold", "severity": "medium" },
-    { "id": "FF-251129", "weekIndex": 6, "period": "2026-W21", "region": "West", "type": "Routing exception", "severity": "medium" },
-    { "id": "FF-251133", "weekIndex": 6, "period": "2026-W21", "region": "Mountain", "type": "Delayed shipment", "severity": "high" },
-    { "id": "FF-251146", "weekIndex": 6, "period": "2026-W21", "region": "Mountain", "type": "Weather delay", "severity": "medium" },
-
-    { "id": "FF-251158", "weekIndex": 7, "period": "2026-W22", "region": "Midwest", "type": "Address correction", "severity": "low" },
-    { "id": "FF-251166", "weekIndex": 7, "period": "2026-W22", "region": "South", "type": "Missed pickup", "severity": "medium" },
-    { "id": "FF-251173", "weekIndex": 7, "period": "2026-W22", "region": "West", "type": "Damaged goods", "severity": "medium" },
-    { "id": "FF-251184", "weekIndex": 7, "period": "2026-W22", "region": "Mountain", "type": "Delayed shipment", "severity": "high" },
-    { "id": "FF-251199", "weekIndex": 7, "period": "2026-W22", "region": "Mountain", "type": "Routing exception", "severity": "medium" },
-
-    { "id": "FF-251207", "weekIndex": 8, "period": "2026-W23", "region": "Northeast", "type": "Customs hold", "severity": "medium" },
-    { "id": "FF-251214", "weekIndex": 8, "period": "2026-W23", "region": "South", "type": "Weather delay", "severity": "medium" },
-    { "id": "FF-251226", "weekIndex": 8, "period": "2026-W23", "region": "West", "type": "Delayed shipment", "severity": "medium" },
-    { "id": "FF-251232", "weekIndex": 8, "period": "2026-W23", "region": "Mountain", "type": "Missed pickup", "severity": "high" },
-    { "id": "FF-251244", "weekIndex": 8, "period": "2026-W23", "region": "Mountain", "type": "Delayed shipment", "severity": "high" },
-    { "id": "FF-251258", "weekIndex": 8, "period": "2026-W23", "region": "Mountain", "type": "Customs hold", "severity": "medium" },
-
-    { "id": "FF-251264", "weekIndex": 9, "period": "2026-W24", "region": "Midwest", "type": "Address correction", "severity": "low" },
-    { "id": "FF-251278", "weekIndex": 9, "period": "2026-W24", "region": "South", "type": "Routing exception", "severity": "medium" },
-    { "id": "FF-251283", "weekIndex": 9, "period": "2026-W24", "region": "West", "type": "Weather delay", "severity": "medium" },
-    { "id": "FF-251295", "weekIndex": 9, "period": "2026-W24", "region": "West", "type": "Address correction", "severity": "low" },
-    { "id": "FF-251301", "weekIndex": 9, "period": "2026-W24", "region": "Mountain", "type": "Missed pickup", "severity": "high" },
-    { "id": "FF-251314", "weekIndex": 9, "period": "2026-W24", "region": "Mountain", "type": "Delayed shipment", "severity": "high" },
-    { "id": "FF-251329", "weekIndex": 9, "period": "2026-W24", "region": "Mountain", "type": "Damaged goods", "severity": "medium" },
-
-    { "id": "FF-251337", "weekIndex": 10, "period": "2026-W25", "region": "Northeast", "type": "Address correction", "severity": "low" },
-    { "id": "FF-251348", "weekIndex": 10, "period": "2026-W25", "region": "South", "type": "Delayed shipment", "severity": "medium" },
-    { "id": "FF-251356", "weekIndex": 10, "period": "2026-W25", "region": "South", "type": "Customs hold", "severity": "medium" },
-    { "id": "FF-251367", "weekIndex": 10, "period": "2026-W25", "region": "West", "type": "Missed pickup", "severity": "medium" },
-    { "id": "FF-251374", "weekIndex": 10, "period": "2026-W25", "region": "Mountain", "type": "Delayed shipment", "severity": "high" },
-    { "id": "FF-251381", "weekIndex": 10, "period": "2026-W25", "region": "Mountain", "type": "Routing exception", "severity": "high" },
-    { "id": "FF-251399", "weekIndex": 10, "period": "2026-W25", "region": "Mountain", "type": "Weather delay", "severity": "medium" },
-
-    { "id": "FF-251402", "weekIndex": 11, "period": "2026-W26", "region": "Midwest", "type": "Address correction", "severity": "low" },
-    { "id": "FF-251419", "weekIndex": 11, "period": "2026-W26", "region": "Northeast", "type": "Delayed shipment", "severity": "medium" },
-    { "id": "FF-251424", "weekIndex": 11, "period": "2026-W26", "region": "South", "type": "Damaged goods", "severity": "medium" },
-    { "id": "FF-251437", "weekIndex": 11, "period": "2026-W26", "region": "South", "type": "Missed pickup", "severity": "high" },
-    { "id": "FF-251443", "weekIndex": 11, "period": "2026-W26", "region": "West", "type": "Weather delay", "severity": "medium" },
-    { "id": "FF-251455", "weekIndex": 11, "period": "2026-W26", "region": "West", "type": "Customs hold", "severity": "medium" },
-    { "id": "FF-251468", "weekIndex": 11, "period": "2026-W26", "region": "Mountain", "type": "Delayed shipment", "severity": "high" },
-    { "id": "FF-251472", "weekIndex": 11, "period": "2026-W26", "region": "Mountain", "type": "Missed pickup", "severity": "high" },
-    { "id": "FF-251489", "weekIndex": 11, "period": "2026-W26", "region": "Mountain", "type": "Routing exception", "severity": "high" },
-    { "id": "FF-251497", "weekIndex": 11, "period": "2026-W26", "region": "Mountain", "type": "Address correction", "severity": "medium" }
+    {
+      "id": "FF-251041",
+      "weekIndex": 5,
+      "period": "2026-W20",
+      "region": "Midwest",
+      "type": "Address correction",
+      "severity": "low"
+    },
+    {
+      "id": "FF-251055",
+      "weekIndex": 5,
+      "period": "2026-W20",
+      "region": "Northeast",
+      "type": "Routing exception",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251068",
+      "weekIndex": 5,
+      "period": "2026-W20",
+      "region": "South",
+      "type": "Delayed shipment",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251074",
+      "weekIndex": 5,
+      "period": "2026-W20",
+      "region": "West",
+      "type": "Weather delay",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251089",
+      "weekIndex": 5,
+      "period": "2026-W20",
+      "region": "Mountain",
+      "type": "Missed pickup",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251101",
+      "weekIndex": 6,
+      "period": "2026-W21",
+      "region": "Northeast",
+      "type": "Address correction",
+      "severity": "low"
+    },
+    {
+      "id": "FF-251114",
+      "weekIndex": 6,
+      "period": "2026-W21",
+      "region": "South",
+      "type": "Customs hold",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251129",
+      "weekIndex": 6,
+      "period": "2026-W21",
+      "region": "West",
+      "type": "Routing exception",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251133",
+      "weekIndex": 6,
+      "period": "2026-W21",
+      "region": "Mountain",
+      "type": "Delayed shipment",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251146",
+      "weekIndex": 6,
+      "period": "2026-W21",
+      "region": "Mountain",
+      "type": "Weather delay",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251158",
+      "weekIndex": 7,
+      "period": "2026-W22",
+      "region": "Midwest",
+      "type": "Address correction",
+      "severity": "low"
+    },
+    {
+      "id": "FF-251166",
+      "weekIndex": 7,
+      "period": "2026-W22",
+      "region": "South",
+      "type": "Missed pickup",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251173",
+      "weekIndex": 7,
+      "period": "2026-W22",
+      "region": "West",
+      "type": "Damaged goods",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251184",
+      "weekIndex": 7,
+      "period": "2026-W22",
+      "region": "Mountain",
+      "type": "Delayed shipment",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251199",
+      "weekIndex": 7,
+      "period": "2026-W22",
+      "region": "Mountain",
+      "type": "Routing exception",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251207",
+      "weekIndex": 8,
+      "period": "2026-W23",
+      "region": "Northeast",
+      "type": "Customs hold",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251214",
+      "weekIndex": 8,
+      "period": "2026-W23",
+      "region": "South",
+      "type": "Weather delay",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251226",
+      "weekIndex": 8,
+      "period": "2026-W23",
+      "region": "West",
+      "type": "Delayed shipment",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251232",
+      "weekIndex": 8,
+      "period": "2026-W23",
+      "region": "Mountain",
+      "type": "Missed pickup",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251244",
+      "weekIndex": 8,
+      "period": "2026-W23",
+      "region": "Mountain",
+      "type": "Delayed shipment",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251258",
+      "weekIndex": 8,
+      "period": "2026-W23",
+      "region": "Mountain",
+      "type": "Customs hold",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251264",
+      "weekIndex": 9,
+      "period": "2026-W24",
+      "region": "Midwest",
+      "type": "Address correction",
+      "severity": "low"
+    },
+    {
+      "id": "FF-251278",
+      "weekIndex": 9,
+      "period": "2026-W24",
+      "region": "South",
+      "type": "Routing exception",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251283",
+      "weekIndex": 9,
+      "period": "2026-W24",
+      "region": "West",
+      "type": "Weather delay",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251295",
+      "weekIndex": 9,
+      "period": "2026-W24",
+      "region": "West",
+      "type": "Address correction",
+      "severity": "low"
+    },
+    {
+      "id": "FF-251301",
+      "weekIndex": 9,
+      "period": "2026-W24",
+      "region": "Mountain",
+      "type": "Missed pickup",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251314",
+      "weekIndex": 9,
+      "period": "2026-W24",
+      "region": "Mountain",
+      "type": "Delayed shipment",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251329",
+      "weekIndex": 9,
+      "period": "2026-W24",
+      "region": "Mountain",
+      "type": "Damaged goods",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251337",
+      "weekIndex": 10,
+      "period": "2026-W25",
+      "region": "Northeast",
+      "type": "Address correction",
+      "severity": "low"
+    },
+    {
+      "id": "FF-251348",
+      "weekIndex": 10,
+      "period": "2026-W25",
+      "region": "South",
+      "type": "Delayed shipment",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251356",
+      "weekIndex": 10,
+      "period": "2026-W25",
+      "region": "South",
+      "type": "Customs hold",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251367",
+      "weekIndex": 10,
+      "period": "2026-W25",
+      "region": "West",
+      "type": "Missed pickup",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251374",
+      "weekIndex": 10,
+      "period": "2026-W25",
+      "region": "Mountain",
+      "type": "Delayed shipment",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251381",
+      "weekIndex": 10,
+      "period": "2026-W25",
+      "region": "Mountain",
+      "type": "Routing exception",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251399",
+      "weekIndex": 10,
+      "period": "2026-W25",
+      "region": "Mountain",
+      "type": "Weather delay",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251402",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "Midwest",
+      "type": "Address correction",
+      "severity": "low"
+    },
+    {
+      "id": "FF-251419",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "Northeast",
+      "type": "Delayed shipment",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251424",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "South",
+      "type": "Damaged goods",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251437",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "South",
+      "type": "Missed pickup",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251443",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "West",
+      "type": "Weather delay",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251455",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "West",
+      "type": "Customs hold",
+      "severity": "medium"
+    },
+    {
+      "id": "FF-251468",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "Mountain",
+      "type": "Delayed shipment",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251472",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "Mountain",
+      "type": "Missed pickup",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251489",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "Mountain",
+      "type": "Routing exception",
+      "severity": "high"
+    },
+    {
+      "id": "FF-251497",
+      "weekIndex": 11,
+      "period": "2026-W26",
+      "region": "Mountain",
+      "type": "Address correction",
+      "severity": "medium"
+    }
   ]
 }
