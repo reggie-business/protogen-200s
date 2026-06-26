@@ -28,12 +28,14 @@
 
     <v-main v-else class="gate-main">
       <v-container class="fill-height d-flex align-center justify-center">
-        <v-card class="gate-card pa-6" width="420" elevation="2">
-          <div class="gate-title">FastForward Logistics</div>
-          <div class="gate-subtitle">Operations Dashboard Access</div>
+        <v-card class="gate-card" elevation="2">
+          <div class="gate-header">
+            <div class="gate-title">FastForward Logistics</div>
+            <div class="gate-subtitle">Operations Dashboard Access</div>
+          </div>
           <p class="gate-note">Enter the demo access code to continue.</p>
 
-          <v-form @submit.prevent="submitAccessCode">
+          <v-form @submit.prevent="submitAccessCode" class="gate-form">
             <v-text-field
               ref="accessInput"
               v-model="enteredCode"
@@ -44,9 +46,10 @@
               prepend-inner-icon="mdi-lock-outline"
               :error-messages="errorMessage ? [errorMessage] : []"
               @keydown.enter="submitAccessCode"
+              class="access-input"
             />
 
-            <v-btn block color="primary" class="mt-2" type="submit">Unlock Dashboard</v-btn>
+            <v-btn block color="primary" class="mt-4" type="submit">Unlock Dashboard</v-btn>
           </v-form>
         </v-card>
       </v-container>
@@ -136,23 +139,43 @@ onMounted(() => {
 .gate-card {
   border: 1px solid #e0e3e8;
   border-radius: 10px;
+  padding: 32px;
+}
+
+.gate-header {
+  margin-bottom: 20px;
 }
 
 .gate-title {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #1a2332;
+  margin-bottom: 4px;
 }
 
 .gate-subtitle {
   font-size: 0.95rem;
   font-weight: 600;
   color: #2f6f73;
-  margin-top: 4px;
 }
 
 .gate-note {
   color: #5f6874;
-  margin: 12px 0 16px;
+  font-size: 0.9rem;
+  margin: 0 0 24px 0;
+}
+
+.gate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+:deep(.access-input .v-field__outline) {
+  border-width: 1px;
+}
+
+:deep(.access-input .v-field__input) {
+  padding-left: 12px;
 }
 </style>

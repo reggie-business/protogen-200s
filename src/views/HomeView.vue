@@ -11,8 +11,8 @@
       </div>
     </div>
 
-    <v-row class="mb-6 metric-row">
-      <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" lg="3" class="metric-col">
+    <v-row class="mb-6 metric-row" style="width: 100%">
+      <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" lg="3" class="metric-col" style="min-width: 0">
         <MetricCard
           :label="tile.label"
           :value="tile.value"
@@ -24,8 +24,8 @@
       </v-col>
     </v-row>
 
-    <v-row class="mb-6 chart-row">
-      <v-col cols="12" lg="8" class="chart-col">
+    <v-row class="mb-6 chart-row" style="width: 100%">
+      <v-col cols="12" lg="8" class="chart-col" style="min-width: 0">
         <v-card flat class="panel-card" height="348">
           <div class="panel-content pa-6">
             <div class="panel-header">
@@ -39,7 +39,7 @@
         </v-card>
       </v-col>
 
-      <v-col cols="12" lg="4" class="regional-col">
+      <v-col cols="12" lg="4" class="regional-col" style="min-width: 0">
         <v-card flat class="panel-card" height="348">
           <div class="panel-content pa-6">
             <div class="panel-header">
@@ -67,8 +67,8 @@
       </v-col>
     </v-row>
 
-    <v-row class="exceptions-row">
-      <v-col cols="12" class="exceptions-col">
+    <v-row class="exceptions-row" style="width: 100%">
+      <v-col cols="12" class="exceptions-col" style="min-width: 0">
         <v-card flat class="panel-card">
           <div class="panel-content pa-6">
             <div class="panel-header mb-4">
@@ -78,22 +78,22 @@
             <v-table density="comfortable" class="exceptions-table">
               <thead>
                 <tr>
-                  <th class="text-left">Shipment ID</th>
-                  <th class="text-left">Region</th>
-                  <th class="text-left">Type</th>
-                  <th class="text-left">Severity</th>
-                  <th class="text-left">Period</th>
+                  <th class="text-left col-shipment-id">Shipment ID</th>
+                  <th class="text-left col-region">Region</th>
+                  <th class="text-left col-type">Type</th>
+                  <th class="text-left col-severity">Severity</th>
+                  <th class="text-left col-period">Period</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="ex in exceptionRows" :key="ex.id" class="data-row">
-                  <td class="font-weight-medium">{{ ex.id }}</td>
-                  <td>{{ ex.region }}</td>
-                  <td>{{ ex.type }}</td>
-                  <td>
+                  <td class="font-weight-medium col-shipment-id">{{ ex.id }}</td>
+                  <td class="col-region">{{ ex.region }}</td>
+                  <td class="col-type">{{ ex.type }}</td>
+                  <td class="col-severity">
                     <v-chip size="small" :color="ex.severityColor" variant="tonal">{{ ex.severity }}</v-chip>
                   </td>
-                  <td class="text-medium-emphasis">{{ ex.period }}</td>
+                  <td class="text-medium-emphasis col-period">{{ ex.period }}</td>
                 </tr>
               </tbody>
             </v-table>
@@ -437,6 +437,7 @@ const exceptionRows = computed(() =>
 
 .metric-col {
   display: flex;
+  width: 100%;
 }
 
 .chart-row {
@@ -446,6 +447,7 @@ const exceptionRows = computed(() =>
 .chart-col,
 .regional-col {
   display: flex;
+  width: 100%;
 }
 
 .exceptions-row {
@@ -454,6 +456,7 @@ const exceptionRows = computed(() =>
 
 .exceptions-col {
   display: flex;
+  width: 100%;
 }
 
 .panel-card {
@@ -462,6 +465,7 @@ const exceptionRows = computed(() =>
   box-shadow: 0 2px 10px rgba(23, 41, 57, 0.05);
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .panel-content {
@@ -529,5 +533,45 @@ const exceptionRows = computed(() =>
 .status-bad {
   color: #bf655e;
   font-weight: 700;
+}
+
+/* Exceptions table column widths */
+:deep(.col-shipment-id) {
+  width: 18%;
+  min-width: 120px;
+  padding-left: 16px !important;
+  padding-right: 12px !important;
+}
+
+:deep(.col-region) {
+  width: 16%;
+  min-width: 100px;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+:deep(.col-type) {
+  width: 28%;
+  min-width: 140px;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+:deep(.col-severity) {
+  width: 18%;
+  min-width: 100px;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+:deep(.col-period) {
+  width: 20%;
+  min-width: 110px;
+  padding-left: 12px !important;
+  padding-right: 16px !important;
+}
+
+:deep(.exceptions-table tbody td) {
+  vertical-align: middle;
 }
 </style>
