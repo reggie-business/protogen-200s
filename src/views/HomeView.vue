@@ -1,72 +1,52 @@
 <template>
-  <v-app-bar flat color="primary-darken-1" height="66" class="top-bar">
-    <v-app-bar-title>
-      <span class="app-title">FastForward Logistics</span>
-      <span class="app-subtitle"> - Operations</span>
-    </v-app-bar-title>
-    <template #append>
-      <v-select
-        v-model="selectedRegion"
-        :items="regionOptions"
-        item-title="label"
-        item-value="value"
-        variant="solo-filled"
-        hide-details
-        density="compact"
-        class="region-filter"
-        prepend-inner-icon="mdi-map-marker-outline"
-        bg-color="primary"
-        base-color="white"
-      />
-    </template>
-  </v-app-bar>
-
-  <v-main class="dashboard-main">
-    <v-container fluid class="pa-6">
-      <div class="context-line mb-4">
-        <div class="context-item">
-          <span class="context-label">Scope</span>
-          <strong>{{ selectedRegionLabel }}</strong>
-        </div>
-        <div class="context-item">
-          <span class="context-label">Last Updated</span>
-          <strong>{{ latestPeriodLabel }}</strong>
-        </div>
+  <v-container fluid class="dashboard-content">
+    <div class="context-line mb-5">
+      <div class="context-item">
+        <span class="context-label">Scope</span>
+        <strong>{{ selectedRegionLabel }}</strong>
       </div>
+      <div class="context-item">
+        <span class="context-label">Last Updated</span>
+        <strong>{{ latestPeriodLabel }}</strong>
+      </div>
+    </div>
 
-      <v-row class="mb-6">
-        <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" lg="3">
-          <MetricCard
-            :label="tile.label"
-            :value="tile.value"
-            :unit="tile.unit"
-            :trend="tile.trend"
-            :delta="tile.delta"
-            :delta-is-good="tile.deltaIsGood"
-          />
-        </v-col>
-      </v-row>
+    <v-row class="mb-6 metric-row">
+      <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" lg="3" class="metric-col">
+        <MetricCard
+          :label="tile.label"
+          :value="tile.value"
+          :unit="tile.unit"
+          :trend="tile.trend"
+          :delta="tile.delta"
+          :delta-is-good="tile.deltaIsGood"
+        />
+      </v-col>
+    </v-row>
 
-      <v-row class="mb-6">
-        <v-col cols="12" lg="8">
-          <v-card flat class="pa-5 panel-card" height="348">
+    <v-row class="mb-6 chart-row">
+      <v-col cols="12" lg="8" class="chart-col">
+        <v-card flat class="panel-card" height="348">
+          <div class="panel-content pa-6">
             <div class="panel-header">
               <span class="panel-title">On-Time Delivery Rate</span>
               <span class="panel-sub">12-week trend, filtered by scope</span>
             </div>
-            <div class="trend-chart-wrap mt-3">
+            <div class="trend-chart-wrap mt-4">
               <Line :data="trendChartData" :options="trendChartOptions" />
             </div>
-          </v-card>
-        </v-col>
+          </div>
+        </v-card>
+      </v-col>
 
-        <v-col cols="12" lg="4">
-          <v-card flat class="pa-5 panel-card" height="348">
+      <v-col cols="12" lg="4" class="regional-col">
+        <v-card flat class="panel-card" height="348">
+          <div class="panel-content pa-6">
             <div class="panel-header">
               <span class="panel-title">Regional Performance</span>
               <span class="panel-sub">Weekly shipments and on-time %</span>
             </div>
-            <v-table density="compact" class="mt-3 region-table">
+            <v-table density="compact" class="mt-4 region-table">
               <thead>
                 <tr>
                   <th class="text-left">Region</th>
@@ -82,14 +62,16 @@
                 </tr>
               </tbody>
             </v-table>
-          </v-card>
-        </v-col>
-      </v-row>
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
 
-      <v-row>
-        <v-col cols="12">
-          <v-card flat class="pa-5 panel-card">
-            <div class="panel-header mb-3">
+    <v-row class="exceptions-row">
+      <v-col cols="12" class="exceptions-col">
+        <v-card flat class="panel-card">
+          <div class="panel-content pa-6">
+            <div class="panel-header mb-4">
               <span class="panel-title">Open Exceptions</span>
               <span class="panel-sub">Recent events sorted by severity and recency</span>
             </div>
@@ -115,11 +97,11 @@
                 </tr>
               </tbody>
             </v-table>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-main>
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -421,45 +403,17 @@ const exceptionRows = computed(() =>
 </script>
 
 <style scoped>
-.dashboard-main {
+.dashboard-content {
+  padding: 24px;
   background: #f6f7f5;
-}
-
-.top-bar {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.app-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.01em;
-}
-
-.app-subtitle {
-  font-size: 1.02rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.region-filter {
-  min-width: 230px;
-  max-width: 250px;
-  margin-right: 10px;
-  color: white;
-}
-
-:deep(.region-filter .v-field__input),
-:deep(.region-filter .v-select__selection-text),
-:deep(.region-filter .v-icon) {
-  color: white !important;
 }
 
 .context-line {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   align-items: center;
   flex-wrap: wrap;
+  margin-bottom: 24px;
 }
 
 .context-item {
@@ -477,17 +431,50 @@ const exceptionRows = computed(() =>
   color: #78848f;
 }
 
+.metric-row {
+  gap: 24px;
+}
+
+.metric-col {
+  display: flex;
+}
+
+.chart-row {
+  gap: 24px;
+}
+
+.chart-col,
+.regional-col {
+  display: flex;
+}
+
+.exceptions-row {
+  gap: 24px;
+}
+
+.exceptions-col {
+  display: flex;
+}
+
 .panel-card {
   border-radius: 10px;
   border: 1px solid #dce2e5;
   box-shadow: 0 2px 10px rgba(23, 41, 57, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .panel-header {
   display: flex;
   align-items: baseline;
   gap: 10px;
-  margin-bottom: 4px;
+  margin-bottom: 0;
 }
 
 .panel-title {

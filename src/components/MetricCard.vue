@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="metric-card pa-5" height="138">
+  <v-card flat class="metric-card" height="152">
     <div class="metric-label">{{ label }}</div>
     <div class="metric-value">
       {{ displayValue }}<span v-if="unit" class="metric-unit"> {{ unit }}</span>
@@ -47,6 +47,10 @@ const trendClass = computed(() => {
   border-radius: 10px;
   border: 1px solid #dbe1e4;
   box-shadow: 0 2px 8px rgba(24, 39, 55, 0.04);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .metric-label {
@@ -55,15 +59,16 @@ const trendClass = computed(() => {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #6f7b85;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .metric-value {
   font-size: 2rem;
   font-weight: 700;
   color: #1f2a33;
-  line-height: 1.08;
-  margin-bottom: 8px;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  word-break: break-word;
 }
 
 .metric-unit {
@@ -74,17 +79,18 @@ const trendClass = computed(() => {
 .metric-trend {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   font-size: 0.78rem;
   font-weight: 700;
   border-radius: 999px;
-  padding: 3px 9px;
+  padding: 4px 12px;
+  width: fit-content;
 }
 
 .metric-period {
   font-weight: 500;
   color: #6f7b85;
-  margin-left: 4px;
+  margin-left: 2px;
 }
 
 .trend-good {
@@ -102,3 +108,4 @@ const trendClass = computed(() => {
   background: rgba(103, 119, 130, 0.1);
 }
 </style>
+
