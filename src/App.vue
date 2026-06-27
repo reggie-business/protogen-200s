@@ -64,7 +64,7 @@ import { RouterView } from 'vue-router'
 
 // Demo-only client-side gate for mock data. This is not real authentication.
 // The access code is visible in the client bundle and should not protect sensitive data.
-const ACCESS_CODE = 'protogen'
+const ACCESS_CODE = 'fastforward'
 
 const enteredCode = ref('')
 const isUnlocked = ref(false)
