@@ -103,6 +103,7 @@ onMounted(() => {
 <style scoped>
 .dashboard-main {
   background: var(--ff-page-bg);
+  padding-top: 64px;
 }
 
 .gate-main {
