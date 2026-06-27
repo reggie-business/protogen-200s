@@ -1,24 +1,26 @@
 <template>
   <v-app>
     <v-app-bar flat color="#1B2733" height="64" class="top-bar" v-if="isUnlocked">
-      <v-app-bar-title>
-        <span class="app-title">FastForward Logistics</span>
-        <span class="app-subtitle"> - Operations</span>
-      </v-app-bar-title>
-      <template #append>
-        <v-select
-          v-model="selectedRegion"
-          :items="regionOptions"
-          item-title="label"
-          item-value="value"
-          variant="outlined"
-          hide-details
-          density="compact"
-          class="region-filter"
-          prepend-inner-icon="mdi-map-marker-outline"
-          bg-color="white"
-        />
-      </template>
+      <v-container fluid class="top-bar-shell">
+        <div class="top-bar-inner">
+          <v-app-bar-title class="app-bar-title-wrap">
+            <span class="app-title">FastForward Logistics</span>
+            <span class="app-subtitle"> - Operations</span>
+          </v-app-bar-title>
+          <v-select
+            v-model="selectedRegion"
+            :items="regionOptions"
+            item-title="label"
+            item-value="value"
+            variant="outlined"
+            hide-details
+            density="compact"
+            class="region-filter"
+            prepend-inner-icon="mdi-map-marker-outline"
+            bg-color="white"
+          />
+        </div>
+      </v-container>
     </v-app-bar>
 
     <v-main v-if="isUnlocked" class="dashboard-main">
@@ -26,7 +28,7 @@
     </v-main>
 
     <v-main v-else class="gate-main">
-      <v-container class="fill-height d-flex align-center justify-center">
+      <div class="gate-center-shell">
         <v-card class="gate-card" elevation="2">
           <div class="gate-header">
             <div class="gate-title">FastForward Logistics</div>
@@ -51,7 +53,7 @@
             <v-btn block color="primary" class="mt-4" type="submit">Unlock Dashboard</v-btn>
           </v-form>
         </v-card>
-      </v-container>
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -105,10 +107,35 @@ onMounted(() => {
 
 .gate-main {
   background-color: var(--ff-page-bg);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
 }
 
 .top-bar {
   border-bottom: 1px solid rgba(226, 230, 235, 0.18);
+}
+
+.top-bar-shell {
+  max-width: 1360px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.top-bar-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.app-bar-title-wrap {
+  min-width: 0;
+  padding-inline-start: 0;
 }
 
 .app-title {
@@ -129,6 +156,7 @@ onMounted(() => {
   min-width: 232px;
   max-width: 252px;
   margin-right: 8px;
+  flex: 0 0 auto;
 }
 
 :deep(.region-filter .v-field) {
@@ -165,6 +193,13 @@ onMounted(() => {
   border-radius: 6px;
   padding: 32px;
   box-shadow: 0 1px 3px rgba(27, 39, 51, 0.06);
+}
+
+.gate-center-shell {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .gate-header {

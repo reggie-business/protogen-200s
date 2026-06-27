@@ -13,7 +13,7 @@
       </div>
 
       <v-row class="metric-row" style="width: 100%">
-        <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" lg="3" class="metric-col" style="min-width: 0">
+        <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" md="3" lg="3" class="metric-col" style="min-width: 0">
           <MetricCard
             :label="tile.label"
             :value="tile.value"
@@ -26,7 +26,7 @@
       </v-row>
 
       <v-row class="chart-row" style="width: 100%">
-        <v-col cols="12" lg="8" class="chart-col" style="min-width: 0">
+        <v-col cols="12" md="8" lg="8" class="chart-col" style="min-width: 0">
           <v-card flat class="panel-card" height="360">
             <div class="panel-content pa-6">
               <div class="panel-header">
@@ -40,7 +40,7 @@
           </v-card>
         </v-col>
 
-        <v-col cols="12" lg="4" class="regional-col" style="min-width: 0">
+        <v-col cols="12" md="4" lg="4" class="regional-col" style="min-width: 0">
           <v-card flat class="panel-card" height="360">
             <div class="panel-content pa-6">
               <div class="panel-header">
@@ -453,14 +453,12 @@ const exceptionRows = computed(() =>
 }
 
 .chart-row {
-  gap: 32px;
   margin-bottom: 56px;
 }
 
 .chart-col,
 .regional-col {
   display: flex;
-  width: 100%;
 }
 
 .exceptions-row {
@@ -469,7 +467,6 @@ const exceptionRows = computed(() =>
 
 .exceptions-col {
   display: flex;
-  width: 100%;
 }
 
 .panel-card {
