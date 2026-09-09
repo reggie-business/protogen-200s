@@ -484,13 +484,13 @@ const exceptionRows = computed(() =>
 
 .metric-row {
   row-gap: 16px;
-  margin-inline: -8px;
+  margin-inline: -6px;
   margin-bottom: 42px;
 }
 
 .metric-col {
   display: flex;
-  padding-inline: 8px;
+  padding-inline: 6px;
 }
 
 .chart-row {
@@ -518,6 +518,14 @@ const exceptionRows = computed(() =>
   .regional-col,
   .exceptions-col {
     padding-inline: 8px;
+  }
+
+  .metric-row {
+    margin-inline: -6px;
+  }
+
+  .metric-col {
+    padding-inline: 6px;
   }
 
   :deep(.region-table table) {
@@ -572,11 +580,11 @@ const exceptionRows = computed(() =>
 
 @media (max-width: 599px) {
   .metric-row {
-    margin-inline: 0;
+    margin-inline: -6px;
   }
 
   .metric-col {
-    padding-inline: 12px;
+    padding-inline: 6px;
   }
 }
 
