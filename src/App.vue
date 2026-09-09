@@ -163,7 +163,7 @@ import { RouterView } from 'vue-router'
 
 // Demo-only client-side gate for mock data. This is not real authentication.
 // The access code is visible in the client bundle and should not protect sensitive data.
-const PASSWORD_PROTECTION_ENABLED = false
+const PASSWORD_PROTECTION_ENABLED = true
 const ACCESS_CODE = 'eagle'
 
 const enteredCode = ref('')
