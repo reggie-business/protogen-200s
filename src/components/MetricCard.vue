@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="metric-card" :class="accentClass" height="130">
+  <v-card flat class="metric-card" :class="accentClass">
     <div class="metric-label">{{ label }}</div>
     <div class="metric-value">
       {{ displayValue }}<span v-if="unit" class="metric-unit"> {{ unit }}</span>
@@ -74,6 +74,9 @@ const sparklinePoints = computed(() => {
 <style scoped>
 .metric-card {
   position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
   border-radius: 14px;
   border: 1px solid var(--ff-border);

@@ -15,37 +15,38 @@
         </div>
       </div>
 
-      <v-row class="metric-row" style="width: 100%">
-        <v-col v-for="tile in metricTiles" :key="tile.label" cols="6" sm="6" md="3" lg="3" class="metric-col" style="min-width: 0">
-          <MetricCard
-            :label="tile.label"
-            :value="tile.value"
-            :unit="tile.unit"
-            :trend="tile.trend"
-            :delta="tile.delta"
-            :delta-is-good="tile.deltaIsGood"
-            :sparkline="tile.sparkline"
-          />
+      <v-row class="overview-row" style="width: 100%; align-items: stretch">
+        <v-col cols="12" md="7" lg="7" class="metric-block" style="min-width: 0; display: flex; flex-direction: column">
+          <v-row class="metric-row" style="width: 100%; flex: 1; min-height: 0">
+            <v-col v-for="tile in metricTiles.slice(0, 2)" :key="tile.label" cols="6" class="metric-col" style="min-width: 0; display: flex; flex-direction: column">
+              <MetricCard
+                :label="tile.label"
+                :value="tile.value"
+                :unit="tile.unit"
+                :trend="tile.trend"
+                :delta="tile.delta"
+                :delta-is-good="tile.deltaIsGood"
+                :sparkline="tile.sparkline"
+              />
+            </v-col>
+          </v-row>
+          <v-row class="metric-row" style="width: 100%; flex: 1; min-height: 0">
+            <v-col v-for="tile in metricTiles.slice(2)" :key="tile.label" cols="6" class="metric-col" style="min-width: 0; display: flex; flex-direction: column">
+              <MetricCard
+                :label="tile.label"
+                :value="tile.value"
+                :unit="tile.unit"
+                :trend="tile.trend"
+                :delta="tile.delta"
+                :delta-is-good="tile.deltaIsGood"
+                :sparkline="tile.sparkline"
+              />
+            </v-col>
+          </v-row>
         </v-col>
-      </v-row>
 
-      <v-row class="chart-row" style="width: 100%">
-        <v-col cols="12" md="8" lg="8" class="chart-col" style="min-width: 0">
-          <v-card flat class="panel-card" height="360">
-            <div class="panel-content pa-6">
-              <div class="panel-header">
-                <span class="panel-title">On-Time Delivery Rate</span>
-                <span class="panel-sub">12-week trend, filtered by scope</span>
-              </div>
-              <div class="trend-chart-wrap">
-                <Line :data="trendChartData" :options="trendChartOptions" />
-              </div>
-            </div>
-          </v-card>
-        </v-col>
-
-        <v-col cols="12" md="4" lg="4" class="regional-col" style="min-width: 0">
-          <v-card flat class="panel-card" height="360">
+        <v-col cols="12" md="5" lg="5" class="regional-col" style="min-width: 0">
+          <v-card flat class="panel-card" height="100%">
             <div class="panel-content pa-6">
               <div class="panel-header">
                 <span class="panel-title">Regional Performance</span>
@@ -72,6 +73,22 @@
                   </tr>
                 </tbody>
               </v-table>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-row class="chart-row" style="width: 100%">
+        <v-col cols="12" class="chart-col" style="min-width: 0">
+          <v-card flat class="panel-card" height="360">
+            <div class="panel-content pa-6">
+              <div class="panel-header">
+                <span class="panel-title">On-Time Delivery Rate</span>
+                <span class="panel-sub">12-week trend, filtered by scope</span>
+              </div>
+              <div class="trend-chart-wrap">
+                <Line :data="trendChartData" :options="trendChartOptions" />
+              </div>
             </div>
           </v-card>
         </v-col>
@@ -483,22 +500,45 @@ const exceptionRows = computed(() =>
 }
 
 .metric-row {
+  flex: 1 1 auto;
+  height: 100%;
+  align-content: stretch;
   row-gap: 16px;
-  margin-inline: -6px;
-  margin-bottom: 42px;
+  margin-inline: 0;
+  margin-bottom: 0;
 }
 
 .metric-col {
   display: flex;
-  padding-inline: 6px;
+  height: auto;
+  min-height: 0;
+  padding-inline: 0;
+}
+
+.overview-row {
+  margin-inline: -8px;
+  margin-bottom: 16px;
+  align-items: stretch;
+}
+
+.metric-block,
+.regional-col {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  padding-inline: 8px;
+}
+
+.overview-row > .metric-block,
+.overview-row > .regional-col {
+  padding-inline: 8px;
 }
 
 .chart-row {
   margin-bottom: 42px;
 }
 
-.chart-col,
-.regional-col {
+.chart-col {
   display: flex;
 }
 
@@ -521,11 +561,11 @@ const exceptionRows = computed(() =>
   }
 
   .metric-row {
-    margin-inline: -6px;
+      margin-inline: 0;
   }
 
   .metric-col {
-    padding-inline: 6px;
+      padding-inline: 0;
   }
 
   :deep(.region-table table) {
@@ -580,11 +620,11 @@ const exceptionRows = computed(() =>
 
 @media (max-width: 599px) {
   .metric-row {
-    margin-inline: -6px;
+    margin-inline: 0;
   }
 
   .metric-col {
-    padding-inline: 6px;
+    padding-inline: 0;
   }
 }
 
@@ -600,6 +640,10 @@ const exceptionRows = computed(() =>
   flex-direction: column;
   width: 100%;
   background: var(--ff-surface);
+}
+
+.regional-col .panel-card {
+  overflow: hidden;
 }
 
 .panel-content {
