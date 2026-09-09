@@ -720,6 +720,10 @@ onUnmounted(() => {
   padding-inline: 2px;
 }
 
+:deep(.access-input .v-field--focused .v-label) {
+  padding-inline: 2px;
+}
+
 :deep(.access-input .v-icon) {
   color: #5f6b77;
 }
