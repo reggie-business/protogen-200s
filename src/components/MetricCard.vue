@@ -1,13 +1,17 @@
 <template>
-  <v-card flat class="metric-card" height="152">
+  <v-card flat class="metric-card" :class="accentClass" height="176">
     <div class="metric-label">{{ label }}</div>
     <div class="metric-value">
       {{ displayValue }}<span v-if="unit" class="metric-unit"> {{ unit }}</span>
     </div>
-    <div class="metric-trend" :class="trendClass">
-      <v-icon size="15">{{ trendIcon }}</v-icon>
-      {{ delta }}
-      <span class="metric-period">vs prior week</span>
+    <div class="metric-footer">
+      <div class="metric-trend" :class="trendClass">
+        <v-icon size="14">{{ trendIcon }}</v-icon>
+        {{ delta }}
+      </div>
+      <svg class="metric-sparkline" viewBox="0 0 120 34" role="img" :aria-label="`${label} trend over the last 8 weeks`">
+        <polyline :points="sparklinePoints" fill="none" :stroke="accentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
     </div>
   </v-card>
 </template>
@@ -24,6 +28,7 @@ const props = defineProps<{
   trend: TrendDirection
   delta: string
   deltaIsGood: boolean
+  sparkline: number[]
 }>()
 
 const displayValue = computed(() =>
@@ -40,13 +45,39 @@ const trendClass = computed(() => {
   if (props.trend === 'flat') return 'trend-flat'
   return props.deltaIsGood ? 'trend-good' : 'trend-bad'
 })
+
+const accentClass = computed(() => `accent-${props.label.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '')}`)
+
+const accentColor = computed(() => {
+  if (props.label === 'Total Shipments') return '#3b82f6'
+  if (props.label === 'On-Time Delivery %') return '#f87171'
+  if (props.label === 'Open Exceptions') return '#fbbf24'
+  return '#a78bfa'
+})
+
+const sparklinePoints = computed(() => {
+  const values = props.sparkline.slice(-8)
+  if (values.length < 2) return ''
+  const min = Math.min(...values)
+  const max = Math.max(...values)
+  const spread = max - min || 1
+  return values
+    .map((value, index) => {
+      const x = (index / (values.length - 1)) * 116 + 2
+      const y = 30 - ((value - min) / spread) * 26
+      return `${x.toFixed(1)},${y.toFixed(1)}`
+    })
+    .join(' ')
+})
 </script>
 
 <style scoped>
 .metric-card {
-  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
   border: 1px solid var(--ff-border);
-  box-shadow: 0 1px 3px rgba(27, 39, 51, 0.04);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.16);
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -55,12 +86,33 @@ const trendClass = computed(() => {
   background: var(--ff-surface);
 }
 
+.metric-card::before {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  left: 0;
+  height: 2px;
+  content: '';
+}
+
+.accent-total-shipments::before { background: #3b82f6; }
+.accent-on-time-delivery::before { background: #f87171; }
+.accent-open-exceptions::before { background: #fbbf24; }
+.accent-avg-transit-time::before { background: #a78bfa; }
+
+.metric-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 .metric-label {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  color: #5f6b77;
+  color: var(--ff-secondary);
   margin-bottom: 0;
 }
 
@@ -79,40 +131,38 @@ const trendClass = computed(() => {
   font-weight: 600;
 }
 
+.metric-sparkline {
+  width: 92px;
+  height: 28px;
+  opacity: 0.9;
+  overflow: visible;
+}
+
 .metric-trend {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   font-size: 0.75rem;
   font-weight: 600;
-  border-radius: 4px;
+  border-radius: 999px;
   padding: 3px 8px;
   width: fit-content;
-  border: 1px solid transparent;
-}
-
-.metric-period {
-  font-weight: 500;
-  color: #667483;
-  margin-left: 4px;
+  border: 0;
 }
 
 .trend-good {
   color: var(--ff-success);
-  background: rgba(46, 125, 50, 0.08);
-  border-color: rgba(46, 125, 50, 0.2);
+  background: rgba(52, 211, 153, 0.12);
 }
 
 .trend-bad {
   color: var(--ff-error);
-  background: rgba(211, 47, 47, 0.08);
-  border-color: rgba(211, 47, 47, 0.2);
+  background: rgba(248, 113, 113, 0.12);
 }
 
 .trend-flat {
-  color: #607080;
-  background: rgba(96, 112, 128, 0.08);
-  border-color: rgba(96, 112, 128, 0.2);
+  color: var(--ff-secondary);
+  background: rgba(100, 116, 139, 0.14);
 }
 </style>
 

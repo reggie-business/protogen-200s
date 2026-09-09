@@ -21,6 +21,7 @@
             :trend="tile.trend"
             :delta="tile.delta"
             :delta-is-good="tile.deltaIsGood"
+            :sparkline="tile.sparkline"
           />
         </v-col>
       </v-row>
@@ -59,7 +60,12 @@
                   <tr v-for="row in regionalRows" :key="row.region" class="data-row">
                     <td>{{ row.region }}</td>
                     <td class="text-right num-col">{{ row.shipments }}</td>
-                    <td class="text-right num-col" :class="row.onTimeClass">{{ row.onTime }}</td>
+                    <td class="text-right num-col" :class="row.onTimeClass">
+                      <span>{{ row.onTime }}</span>
+                      <span class="region-progress-track">
+                        <span class="region-progress-bar" :style="{ width: `${row.onTimeValue}%` }"></span>
+                      </span>
+                    </td>
                   </tr>
                 </tbody>
               </v-table>
@@ -87,7 +93,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="ex in exceptionRows" :key="ex.id" class="data-row">
+                  <tr v-for="ex in exceptionRows" :key="ex.id" class="data-row" :class="`severity-row-${ex.severity.toLowerCase()}`">
                     <td class="font-weight-medium col-shipment-id id-code">{{ ex.id }}</td>
                     <td class="col-region">{{ ex.region }}</td>
                     <td class="col-type">{{ ex.type }}</td>
@@ -116,6 +122,7 @@ import {
   LineElement,
   LinearScale,
   PointElement,
+  type ScriptableContext,
   Tooltip,
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
@@ -259,6 +266,7 @@ const metricTiles = computed(() => {
       trend: trendDirection(shipmentsDelta),
       delta: formatSigned(shipmentsDelta, 0),
       deltaIsGood: shipmentsDelta >= 0,
+      sparkline: weeklySeries.value.map((entry) => entry.shipments),
     },
     {
       label: 'On-Time Delivery %',
@@ -266,6 +274,7 @@ const metricTiles = computed(() => {
       trend: trendDirection(onTimeDelta),
       delta: `${formatSigned(onTimeDelta, 1)} pts`,
       deltaIsGood: onTimeDelta >= 0,
+      sparkline: weeklySeries.value.map((entry) => entry.onTimePct),
     },
     {
       label: 'Open Exceptions',
@@ -273,6 +282,7 @@ const metricTiles = computed(() => {
       trend: trendDirection(exceptionsDelta),
       delta: formatSigned(exceptionsDelta, 0),
       deltaIsGood: exceptionsDelta <= 0,
+      sparkline: weeklySeries.value.map((entry) => entry.exceptions),
     },
     {
       label: 'Avg Transit Time',
@@ -281,6 +291,7 @@ const metricTiles = computed(() => {
       trend: trendDirection(transitDelta),
       delta: `${formatSigned(transitDelta, 1)}d`,
       deltaIsGood: transitDelta <= 0,
+      sparkline: weeklySeries.value.map((entry) => entry.avgTransitDays),
     },
   ]
 })
@@ -291,13 +302,28 @@ const trendChartData = computed(() => ({
     {
       label: 'On-Time %',
       data: weeklySeries.value.map((entry) => Number(entry.onTimePct.toFixed(2))),
-      borderColor: '#1B2733',
-      backgroundColor: 'rgba(27, 39, 51, 0.08)',
+      borderColor: '#3B82F6',
+      backgroundColor: (context: ScriptableContext<'line'>) => {
+        const chart = context.chart
+        const gradient = chart.ctx.createLinearGradient(0, chart.chartArea?.top ?? 0, 0, chart.chartArea?.bottom ?? 0)
+        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.26)')
+        gradient.addColorStop(1, 'rgba(59, 130, 246, 0)')
+        return gradient
+      },
       fill: true,
       tension: 0.3,
       pointRadius: 2,
       pointHoverRadius: 4,
-      pointBackgroundColor: '#1B2733',
+      pointBackgroundColor: '#3B82F6',
+    },
+    {
+      label: 'Target',
+      data: metrics.periods.map(() => 90),
+      borderColor: 'rgba(148, 163, 184, 0.55)',
+      borderDash: [6, 5],
+      borderWidth: 1,
+      pointRadius: 0,
+      fill: false,
     },
   ],
 }))
@@ -324,10 +350,10 @@ const trendChartOptions: ChartOptions<'line'> = {
         display: false,
       },
       ticks: {
-        color: '#5f6b77',
+        color: '#64748B',
         font: {
           size: 12,
-          family: 'Inter',
+          family: 'Space Grotesk',
         },
       },
     },
@@ -335,15 +361,15 @@ const trendChartOptions: ChartOptions<'line'> = {
       min: 78,
       max: 96,
       ticks: {
-        color: '#5f6b77',
+        color: '#64748B',
         font: {
           size: 12,
-          family: 'Inter',
+          family: 'Space Grotesk',
         },
         callback: (value) => `${value}%`,
       },
       grid: {
-        color: '#E2E6EB',
+        color: 'rgba(255, 255, 255, 0.04)',
       },
     },
   },
@@ -362,9 +388,9 @@ const regionalRows = computed(() => {
     const onTime = regionMetrics.onTimePct
 
     let onTimeClass = 'status-bad'
-    if (onTime >= 92) {
+    if (onTime >= 90) {
       onTimeClass = 'status-good'
-    } else if (onTime >= 88) {
+    } else if (onTime >= 85) {
       onTimeClass = 'status-ok'
     }
 
@@ -372,6 +398,7 @@ const regionalRows = computed(() => {
       region,
       shipments: numberFormatter.format(regionMetrics.shipments),
       onTime: `${onTime.toFixed(1)}%`,
+      onTimeValue: Math.min(100, Math.max(0, onTime)),
       onTimeClass,
     }
   })
@@ -402,7 +429,7 @@ const exceptionRows = computed(() =>
 
 <style scoped>
 .dashboard-content {
-  padding: 40px 24px 72px;
+  padding: 34px 32px 72px;
   background: var(--ff-page-bg);
 }
 
@@ -417,7 +444,7 @@ const exceptionRows = computed(() =>
   gap: 28px;
   align-items: center;
   flex-wrap: wrap;
-  margin: 0 0 36px;
+  margin: 0 0 28px;
   padding: 10px 2px 14px;
   border-bottom: 1px solid var(--ff-border);
 }
@@ -427,7 +454,7 @@ const exceptionRows = computed(() =>
   align-items: baseline;
   gap: 8px;
   font-size: 0.875rem;
-  color: #495867;
+  color: var(--ff-secondary);
 }
 
 .context-item strong {
@@ -440,13 +467,13 @@ const exceptionRows = computed(() =>
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.75rem;
-  color: #607080;
+  color: var(--ff-secondary);
 }
 
 .metric-row {
   row-gap: 16px;
   margin-inline: -8px;
-  margin-bottom: 52px;
+  margin-bottom: 42px;
 }
 
 .metric-col {
@@ -455,7 +482,7 @@ const exceptionRows = computed(() =>
 }
 
 .chart-row {
-  margin-bottom: 56px;
+  margin-bottom: 42px;
 }
 
 .chart-col,
@@ -464,7 +491,7 @@ const exceptionRows = computed(() =>
 }
 
 .exceptions-row {
-  gap: 32px;
+  gap: 24px;
 }
 
 .exceptions-col {
@@ -472,9 +499,9 @@ const exceptionRows = computed(() =>
 }
 
 .panel-card {
-  border-radius: 6px;
+  border-radius: 14px;
   border: 1px solid var(--ff-border);
-  box-shadow: 0 1px 3px rgba(27, 39, 51, 0.04);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -492,7 +519,7 @@ const exceptionRows = computed(() =>
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
   margin-bottom: 20px;
   padding-left: 2px;
 }
@@ -506,7 +533,7 @@ const exceptionRows = computed(() =>
 
 .panel-sub {
   font-size: 0.875rem;
-  color: #607080;
+  color: var(--ff-secondary);
   line-height: 1.45;
 }
 
@@ -524,7 +551,7 @@ const exceptionRows = computed(() =>
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #5f6b77;
+  color: var(--ff-secondary);
   font-weight: 700;
   border-bottom: 1px solid var(--ff-border);
   padding: 0 12px;
@@ -569,26 +596,26 @@ const exceptionRows = computed(() =>
 
 :deep(.region-table tbody tr:nth-child(even)),
 :deep(.exceptions-table tbody tr:nth-child(even)) {
-  background: #fafbfd;
+  background: rgba(255, 255, 255, 0.018);
 }
 
 :deep(.region-table tbody tr:hover),
 :deep(.exceptions-table tbody tr:hover) {
-  background: rgba(27, 39, 51, 0.04);
+  background: rgba(59, 130, 246, 0.06);
 }
 
 .status-good {
-  color: var(--ff-success);
+  color: #34d399;
   font-weight: 700;
 }
 
 .status-ok {
-  color: #7a6a2a;
+  color: #60a5fa;
   font-weight: 600;
 }
 
 .status-bad {
-  color: var(--ff-error);
+  color: #fbbf24;
   font-weight: 700;
 }
 
@@ -606,28 +633,50 @@ const exceptionRows = computed(() =>
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 2px 8px;
-  border-radius: 4px;
-  border: 1px solid transparent;
+  border-radius: 999px;
+  border: 0;
   line-height: 1.2;
 }
 
 .severity-high {
-  color: var(--ff-error);
-  background: rgba(211, 47, 47, 0.09);
-  border-color: rgba(211, 47, 47, 0.22);
+  color: #fca5a5;
+  background: rgba(248, 113, 113, 0.14);
 }
 
 .severity-medium {
-  color: #8f6200;
-  background: rgba(249, 168, 37, 0.14);
-  border-color: rgba(249, 168, 37, 0.35);
+  color: #fcd34d;
+  background: rgba(251, 191, 36, 0.14);
 }
 
 .severity-low {
-  color: #607080;
-  background: rgba(96, 112, 128, 0.1);
-  border-color: rgba(96, 112, 128, 0.28);
+  color: #6ee7b7;
+  background: rgba(52, 211, 153, 0.12);
 }
+
+.region-progress-track {
+  display: block;
+  width: 72px;
+  height: 3px;
+  margin: 4px 0 0 auto;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.region-progress-bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: currentColor;
+}
+
+:deep(.exceptions-table tbody tr) {
+  border-left: 3px solid transparent;
+}
+
+:deep(.exceptions-table tbody .severity-row-high) { border-left-color: #f87171; }
+:deep(.exceptions-table tbody .severity-row-medium) { border-left-color: #fbbf24; }
+:deep(.exceptions-table tbody .severity-row-low) { border-left-color: #34d399; }
 
 /* Exceptions table column widths */
 :deep(.col-shipment-id) {

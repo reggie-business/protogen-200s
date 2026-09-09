@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 /* FastForward Logistics — global reset/base */
 *,
 *::before,
@@ -8,14 +10,16 @@
 }
 
 :root {
-  --ff-text: #1b2733;
-  --ff-page-bg: #f7f8fa;
-  --ff-surface: #ffffff;
-  --ff-border: #e2e6eb;
-  --ff-accent: #ff5722;
-  --ff-success: #2e7d32;
-  --ff-warning: #f9a825;
-  --ff-error: #d32f2f;
+  --ff-text: #f1f5f9;
+  --ff-secondary: #64748b;
+  --ff-muted: #334155;
+  --ff-page-bg: #05091a;
+  --ff-surface: #0a1120;
+  --ff-border: rgba(255, 255, 255, 0.07);
+  --ff-accent: #3b82f6;
+  --ff-success: #34d399;
+  --ff-warning: #fbbf24;
+  --ff-error: #f87171;
   --ff-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
 }
@@ -23,7 +27,7 @@
 html,
 body {
   height: 100%;
-  font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
   background-color: var(--ff-page-bg);
   color: var(--ff-text);
   line-height: 1.5;
