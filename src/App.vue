@@ -184,6 +184,10 @@ onMounted(() => {
   background: rgba(255, 87, 34, 0.1);
 }
 
+:deep(.v-overlay .v-list-item) {
+  padding-inline: 16px;
+}
+
 :deep(.v-overlay .v-list-item--active .v-list-item-title) {
   color: var(--ff-accent);
   font-weight: 600;

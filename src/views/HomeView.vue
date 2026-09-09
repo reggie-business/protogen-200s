@@ -445,11 +445,13 @@ const exceptionRows = computed(() =>
 
 .metric-row {
   row-gap: 16px;
+  margin-inline: -8px;
   margin-bottom: 52px;
 }
 
 .metric-col {
   display: flex;
+  padding-inline: 8px;
 }
 
 .chart-row {
