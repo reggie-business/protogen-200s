@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="about-content">
+  <v-container fluid class="about-content pt-10">
     <div class="about-shell">
       <header class="product-header">
         <div>
@@ -111,6 +111,7 @@
   justify-content: space-between;
   gap: 28px;
   margin-bottom: 28px;
+  padding-top: 16px;
   padding-bottom: 24px;
   border-bottom: 1px solid var(--ff-border);
 }

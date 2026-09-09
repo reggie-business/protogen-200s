@@ -1,6 +1,9 @@
 <template>
   <v-container fluid class="dashboard-content">
     <div class="dashboard-shell">
+      <div class="dashboard-page-header">
+        <span>Dashboard</span>
+      </div>
       <div class="context-line">
         <div class="context-item">
           <span class="context-label">Scope</span>
@@ -429,7 +432,7 @@ const exceptionRows = computed(() =>
 
 <style scoped>
 .dashboard-content {
-  padding: 34px 32px 72px;
+  padding: 66px 32px 72px;
   background: var(--ff-page-bg);
 }
 
@@ -437,6 +440,15 @@ const exceptionRows = computed(() =>
   max-width: 1360px;
   margin: 0 auto;
   padding-top: 4px;
+}
+
+.dashboard-page-header {
+  padding-top: 16px;
+  color: var(--ff-secondary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .context-line {

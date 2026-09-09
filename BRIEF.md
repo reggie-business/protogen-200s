@@ -36,16 +36,16 @@ pressure, not a data analyst. Clarity beats cleverness everywhere.
   - ~5 regions (e.g. Midwest, Northeast, South, West, Mountain).
   - One region clearly underperforming (lower on-time %, more exceptions) — so
     filtering to it tells a story.
-  - On-time rate dips in the most recent 1-2 periods company-wide (a visible, mild
+  - On-time rate dips in the most recent 1–2 periods company-wide (a visible, mild
     downward wobble), not a flat line.
   - Exceptions concentrated in the weak region + recent periods.
-  - Plausible magnitudes: thousands of shipments/period, on-time % in the 80s-90s,
+  - Plausible magnitudes: thousands of shipments/period, on-time % in the 80s–90s,
     transit times in days.
 
 ## Tech
 - Vue 3 + Vuetify 3, Vite, TypeScript, Vue Router. No Pinia/testing/jsx/eslint/prettier.
 - Chart: a lightweight Vue-friendly chart lib (e.g. vue-chartjs/Chart.js or
-  ApexCharts) -- Copilot's choice, kept simple.
+  ApexCharts) — Copilot's choice, kept simple.
 - Deployed on Vercel. Data is local JSON (no backend).
 
 ## Components
@@ -53,14 +53,14 @@ pressure, not a data analyst. Clarity beats cleverness everywhere.
   'flat'), delta (e.g. "+2.1%"), and unit/format. Used for all four metric tiles.
 
 ## Style (restraint + one confident accent)
-- Clean, legible, "real internal ops tool" -- NOT a generic template, NOT the warm
+- Clean, legible, "real internal ops tool" — NOT a generic template, NOT the warm
   personal-site palette.
 - Neutral base (white/light-gray surfaces, dark slate text) with ONE strong brand
   accent used deliberately (links, active filter, key highlights). Pick a confident,
   logistics-appropriate accent (a deep teal or signal-blue, not corporate-default).
 - Strong information hierarchy: big readable numbers on tiles, clear section headers,
   generous spacing, restrained color. Status uses color meaningfully (green/amber/red
-  for on-time health and exception severity) -- color as signal, not decoration.
+  for on-time health and exception severity) — color as signal, not decoration.
 - Responsive: usable on a laptop and a large meeting screen.
 
 ## Definition of Done
