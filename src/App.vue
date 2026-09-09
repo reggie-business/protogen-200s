@@ -1,29 +1,82 @@
 <template>
   <v-app>
-    <v-app-bar flat color="#1B2733" height="64" class="top-bar" v-if="isUnlocked">
-      <v-container fluid class="top-bar-shell">
-        <div class="top-bar-inner">
-          <v-app-bar-title class="app-bar-title-wrap">
-            <span class="app-title">FastForward Logistics</span>
-            <span class="app-subtitle"> - Operations</span>
-          </v-app-bar-title>
-          <v-select
-            v-model="selectedRegion"
-            :items="regionOptions"
-            item-title="label"
-            item-value="value"
-            variant="outlined"
-            hide-details
-            density="compact"
-            class="region-filter"
-            prepend-inner-icon="mdi-map-marker-outline"
-            bg-color="white"
-          />
+    <template v-if="isUnlocked">
+      <v-navigation-drawer
+        v-model="drawerOpen"
+        permanent
+        :rail="!drawerOpen"
+        width="220"
+        rail-width="68"
+        class="sidebar"
+      >
+        <div class="sidebar-brand">
+          <div class="brand-mark">FF</div>
+          <div>
+            <div class="brand-name">FastForward</div>
+            <div class="brand-caption">Logistics OS</div>
+          </div>
         </div>
-      </v-container>
-    </v-app-bar>
 
-    <v-main v-if="isUnlocked" class="dashboard-main">
+        <nav class="sidebar-nav" aria-label="Primary navigation">
+          <RouterLink to="/" class="sidebar-link" exact-active-class="sidebar-link-active">
+            <v-icon size="18">mdi-view-dashboard-outline</v-icon>
+            <span>Dashboard</span>
+          </RouterLink>
+          <RouterLink to="/about" class="sidebar-link" exact-active-class="sidebar-link-active">
+            <v-icon size="18">mdi-information-outline</v-icon>
+            <span>About</span>
+          </RouterLink>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="user-avatar">AR</div>
+          <div class="user-details">
+            <strong>Alex Rivera</strong>
+            <span>Operations Lead</span>
+          </div>
+          <v-icon size="17" class="footer-menu-icon">mdi-dots-horizontal</v-icon>
+        </div>
+      </v-navigation-drawer>
+
+      <v-app-bar flat height="72" class="top-bar">
+        <v-container fluid class="top-bar-shell">
+          <div class="top-bar-inner">
+            <div class="page-heading">
+              <v-btn
+                icon
+                variant="text"
+                size="small"
+                class="menu-toggle"
+                :aria-label="drawerOpen ? 'Collapse navigation' : 'Expand navigation'"
+                :title="drawerOpen ? 'Collapse navigation' : 'Expand navigation'"
+                @click="drawerOpen = !drawerOpen"
+              >
+                <v-icon>{{ drawerOpen ? 'mdi-menu-open' : 'mdi-menu' }}</v-icon>
+              </v-btn>
+              <div class="page-heading-copy">
+                <span class="eyebrow">Operations overview</span>
+                <span class="app-title">Network performance</span>
+              </div>
+            </div>
+            <div class="region-filter" role="group" aria-label="Filter by region">
+              <v-icon size="16">mdi-map-marker-outline</v-icon>
+              <button
+                v-for="option in regionOptions"
+                :key="option.value"
+                type="button"
+                class="region-pill"
+                :class="{ 'region-pill-active': selectedRegion === option.value }"
+                @click="selectedRegion = option.value"
+              >
+                {{ option.label === 'All Regions' ? 'All' : option.label }}
+              </button>
+            </div>
+          </div>
+        </v-container>
+      </v-app-bar>
+    </template>
+
+    <v-main v-if="isUnlocked" class="dashboard-main" :class="{ 'dashboard-main-rail': !drawerOpen }">
       <RouterView />
     </v-main>
 
@@ -64,13 +117,15 @@ import { RouterView } from 'vue-router'
 
 // Demo-only client-side gate for mock data. This is not real authentication.
 // The access code is visible in the client bundle and should not protect sensitive data.
-const ACCESS_CODE = 'fastforward'
+const PASSWORD_PROTECTION_ENABLED = false
+const ACCESS_CODE = 'eagle'
 
 const enteredCode = ref('')
-const isUnlocked = ref(false)
+const isUnlocked = ref(!PASSWORD_PROTECTION_ENABLED)
 const errorMessage = ref('')
 const accessInput = ref<{ focus?: () => void } | null>(null)
 const selectedRegion = ref<string>('all')
+const drawerOpen = ref(true)
 
 const regionOptions = ref([
   { label: 'All Regions', value: 'all' },
@@ -103,7 +158,29 @@ onMounted(() => {
 <style scoped>
 .dashboard-main {
   background: var(--ff-page-bg);
-  padding-top: 64px;
+  margin-left: 220px;
+  transition: margin-left 0.2s ease;
+}
+
+.dashboard-main-rail {
+  margin-left: 68px;
+}
+
+.menu-toggle {
+  color: var(--ff-secondary) !important;
+  flex: 0 0 auto;
+}
+
+.page-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.page-heading-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
 .gate-main {
@@ -116,14 +193,13 @@ onMounted(() => {
 }
 
 .top-bar {
-  border-bottom: 1px solid rgba(226, 230, 235, 0.18);
+  border-bottom: 1px solid var(--ff-border);
+  background: var(--ff-page-bg) !important;
 }
 
 .top-bar-shell {
-  max-width: 1360px;
   height: 100%;
-  margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
 }
 
 .top-bar-inner {
@@ -131,66 +207,192 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-}
-
-.app-bar-title-wrap {
-  min-width: 0;
-  padding-inline-start: 0;
+  gap: 32px;
 }
 
 .app-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-}
-
-.app-subtitle {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.region-filter {
-  min-width: 232px;
-  max-width: 252px;
-  margin-right: 8px;
-  flex: 0 0 auto;
-}
-
-:deep(.region-filter .v-field) {
-  border-radius: 6px;
-  background: #ffffff;
-}
-
-:deep(.region-filter .v-field__outline) {
-  --v-field-border-opacity: 1;
-  color: var(--ff-border);
-}
-
-:deep(.region-filter .v-field--focused .v-field__outline) {
-  color: var(--ff-accent);
-}
-
-:deep(.region-filter .v-select__selection-text),
-:deep(.region-filter .v-field__input),
-:deep(.region-filter .v-icon) {
   color: var(--ff-text);
 }
 
-:deep(.v-overlay .v-list-item--active) {
-  background: rgba(255, 87, 34, 0.1);
+.eyebrow {
+  color: var(--ff-secondary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-:deep(.v-overlay .v-list-item) {
-  padding-inline: 16px;
+.region-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  color: var(--ff-secondary);
 }
 
-:deep(.v-overlay .v-list-item--active .v-list-item-title) {
-  color: var(--ff-accent);
+.region-pill {
+  border: 1px solid rgba(15, 23, 42, 0.22);
+  border-radius: 999px;
+  color: var(--ff-text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
   font-weight: 600;
+  background: transparent;
+  padding: 7px 11px;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.region-pill:hover {
+  border-color: var(--ff-accent);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.region-pill-active {
+  background: var(--ff-accent);
+  border-color: #60a5fa;
+  color: #ffffff;
+}
+
+.region-pill-active:hover {
+  background: #2563eb;
+  border-color: #bfdbfe;
+  color: #ffffff;
+}
+
+.sidebar {
+  border-right: 1px solid var(--ff-border) !important;
+  background: #070d1d !important;
+  color: var(--ff-text);
+}
+
+:deep(.sidebar.v-navigation-drawer--rail) .sidebar-brand {
+  justify-content: center;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+:deep(.sidebar.v-navigation-drawer--rail) .brand-name,
+:deep(.sidebar.v-navigation-drawer--rail) .brand-caption,
+:deep(.sidebar.v-navigation-drawer--rail) .user-details,
+:deep(.sidebar.v-navigation-drawer--rail) .footer-menu-icon {
+  display: none;
+}
+
+:deep(.sidebar.v-navigation-drawer--rail) .sidebar-footer {
+  justify-content: center;
+  right: 10px;
+  left: 10px;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 28px 22px 34px;
+}
+
+.brand-mark,
+.gate-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.brand-name {
+  color: var(--ff-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.brand-caption {
+  color: var(--ff-secondary);
+  font-size: 0.68rem;
+  margin-top: 1px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 12px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 9px;
+  color: var(--ff-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 11px 12px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-link:hover,
+.sidebar-link-active {
+  background: rgba(59, 130, 246, 0.12);
+  color: #bfdbfe;
+}
+
+.sidebar-footer {
+  position: absolute;
+  right: 16px;
+  bottom: 20px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-top: 1px solid var(--ff-border);
+  padding-top: 18px;
+}
+
+.user-avatar {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #1e293b;
+  color: #cbd5e1;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.user-details strong {
+  color: var(--ff-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.user-details span {
+  color: var(--ff-secondary);
+  font-size: 0.64rem;
+  white-space: nowrap;
+}
+
+.footer-menu-icon {
+  color: var(--ff-muted);
 }
 
 .gate-card {
