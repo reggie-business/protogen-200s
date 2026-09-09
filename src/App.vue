@@ -720,6 +720,11 @@ onUnmounted(() => {
   color: #5f6b77;
 }
 
+:deep(.access-input .v-field__prepend-inner) {
+  padding-left: 8px;
+  padding-right: 6px;
+}
+
 :deep(.gate-form .v-btn) {
   background: var(--ff-accent) !important;
   color: #ffffff !important;
