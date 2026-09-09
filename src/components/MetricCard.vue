@@ -148,6 +148,7 @@ const sparklinePoints = computed(() => {
   padding: 3px 8px;
   width: fit-content;
   border: 0;
+  white-space: nowrap;
 }
 
 .trend-good {
@@ -163,6 +164,79 @@ const sparklinePoints = computed(() => {
 .trend-flat {
   color: var(--ff-secondary);
   background: rgba(100, 116, 139, 0.14);
+}
+
+@media (min-width: 960px) and (max-width: 1279px) {
+  .metric-label,
+  .metric-value {
+    white-space: nowrap;
+  }
+
+  .metric-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+
+  .metric-value {
+    font-size: 1.75rem;
+    word-break: normal;
+  }
+
+  .metric-unit {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 959px) {
+  .metric-card {
+    padding: 18px;
+  }
+
+  .metric-label,
+  .metric-value {
+    white-space: nowrap;
+  }
+
+  .metric-label {
+    font-size: 0.67rem;
+    letter-spacing: 0.06em;
+  }
+
+  .metric-value {
+    font-size: 1.85rem;
+    word-break: normal;
+  }
+
+  .metric-unit {
+    font-size: 0.85rem;
+  }
+
+  .metric-sparkline {
+    width: 72px;
+  }
+}
+
+@media (max-width: 599px) {
+  .metric-card {
+    padding: 14px;
+  }
+
+  .metric-label {
+    font-size: 0.65rem;
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+
+  .metric-trend {
+    font-size: 0.65rem;
+    padding: 3px 6px;
+  }
+
+  .metric-sparkline {
+    width: 56px;
+  }
 }
 </style>
 

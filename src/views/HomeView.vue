@@ -13,7 +13,7 @@
       </div>
 
       <v-row class="metric-row" style="width: 100%">
-        <v-col v-for="tile in metricTiles" :key="tile.label" cols="12" sm="6" md="3" lg="3" class="metric-col" style="min-width: 0">
+        <v-col v-for="tile in metricTiles" :key="tile.label" cols="6" sm="6" md="3" lg="3" class="metric-col" style="min-width: 0">
           <MetricCard
             :label="tile.label"
             :value="tile.value"
@@ -492,6 +492,80 @@ const exceptionRows = computed(() =>
 
 .exceptions-row {
   gap: 24px;
+}
+
+@media (max-width: 1279px) {
+  .metric-row,
+  .chart-row,
+  .exceptions-row {
+    margin-inline: -8px;
+  }
+
+  .metric-col,
+  .chart-col,
+  .regional-col,
+  .exceptions-col {
+    padding-inline: 8px;
+  }
+
+  :deep(.region-table table) {
+    table-layout: fixed;
+  }
+
+  .region-table thead th,
+  :deep(.region-table tbody td) {
+    padding-right: 6px;
+    padding-left: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  .region-table thead th:first-child,
+  :deep(.region-table tbody td:first-child) {
+    width: 38%;
+    padding-left: 6px;
+  }
+
+  .region-table thead th:nth-child(2),
+  :deep(.region-table tbody td:nth-child(2)) {
+    width: 31%;
+  }
+
+  .region-table thead th:last-child,
+  :deep(.region-table tbody td:last-child) {
+    width: 31%;
+    padding-right: 6px;
+    white-space: nowrap;
+  }
+
+  .region-progress-track {
+    width: 56px;
+  }
+}
+
+@media (max-width: 959px) {
+  .metric-row {
+    row-gap: 12px;
+  }
+
+  .chart-row {
+    row-gap: 20px;
+  }
+
+  .chart-col,
+  .regional-col {
+    width: 100%;
+  }
+}
+
+@media (max-width: 599px) {
+  .metric-row {
+    margin-inline: 0;
+  }
+
+  .metric-col {
+    padding-inline: 12px;
+  }
 }
 
 .exceptions-col {

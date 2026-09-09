@@ -3,8 +3,9 @@
     <template v-if="isUnlocked">
       <v-navigation-drawer
         v-model="drawerOpen"
-        permanent
-        :rail="!drawerOpen"
+        :permanent="!isSmallViewport"
+        :mobile-breakpoint="960"
+        :rail="!drawerOpen && !isSmallViewport"
         width="220"
         rail-width="68"
         class="sidebar"
@@ -24,19 +25,64 @@
           </RouterLink>
           <RouterLink to="/about" class="sidebar-link" exact-active-class="sidebar-link-active">
             <v-icon size="18">mdi-information-outline</v-icon>
-            <span>About</span>
+            <span>Product Info</span>
           </RouterLink>
         </nav>
 
-        <div class="sidebar-footer">
+        <button class="sidebar-footer user-trigger" type="button" @click="operatorCardOpen = true">
           <div class="user-avatar">AR</div>
           <div class="user-details">
-            <strong>Alex Rivera</strong>
-            <span>Operations Lead</span>
+            <strong>Andy Rollins</strong>
+            <span>Sr. Consultant</span>
           </div>
           <v-icon size="17" class="footer-menu-icon">mdi-dots-horizontal</v-icon>
-        </div>
+        </button>
       </v-navigation-drawer>
+
+      <v-dialog v-model="operatorCardOpen" max-width="430" scrim="rgba(2, 6, 23, 0.78)">
+        <v-card class="clearance-card">
+          <div class="clearance-topline">
+            <span class="clearance-label">Internal operator profile</span>
+            <span class="agent-badge">⚡ FastForward Agent</span>
+          </div>
+          <v-card-title class="clearance-title">Operator clearance card</v-card-title>
+          <v-card-subtitle class="clearance-subtitle">Regional network oversight</v-card-subtitle>
+
+          <v-card-text>
+            <div class="clearance-identity">
+              <div class="clearance-avatar">AR</div>
+              <div>
+                <strong>Andy Rollins</strong>
+                <span>Sr. Consultant</span>
+              </div>
+            </div>
+
+            <dl class="clearance-stats">
+              <div>
+                <dt>Clearance</dt>
+                <dd>Level 4 <span>— Regional Ops</span></dd>
+              </div>
+              <div>
+                <dt>Dashboards reviewed this quarter</dt>
+                <dd>47</dd>
+              </div>
+              <div>
+                <dt>Exceptions escalated</dt>
+                <dd>3</dd>
+              </div>
+              <div>
+                <dt>Network uptime on watch</dt>
+                <dd>99.2%</dd>
+              </div>
+            </dl>
+          </v-card-text>
+
+          <v-card-actions class="clearance-actions">
+            <v-spacer />
+            <v-btn variant="text" color="primary" @click="operatorCardOpen = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
       <v-app-bar flat height="72" class="top-bar">
         <v-container fluid class="top-bar-shell">
@@ -112,7 +158,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, provide, ref } from 'vue'
+import { nextTick, onMounted, onUnmounted, provide, ref } from 'vue'
 import { RouterView } from 'vue-router'
 
 // Demo-only client-side gate for mock data. This is not real authentication.
@@ -125,7 +171,9 @@ const isUnlocked = ref(!PASSWORD_PROTECTION_ENABLED)
 const errorMessage = ref('')
 const accessInput = ref<{ focus?: () => void } | null>(null)
 const selectedRegion = ref<string>('all')
-const drawerOpen = ref(true)
+const isSmallViewport = ref(typeof window !== 'undefined' && window.innerWidth < 960)
+const drawerOpen = ref(!isSmallViewport.value && (typeof window === 'undefined' || window.innerWidth >= 1280))
+const operatorCardOpen = ref(false)
 
 const regionOptions = ref([
   { label: 'All Regions', value: 'all' },
@@ -148,10 +196,23 @@ const submitAccessCode = () => {
   errorMessage.value = 'Incorrect code. Please try again.'
 }
 
+const syncViewportMode = () => {
+  const isSmall = window.innerWidth < 960
+  if (isSmall) {
+    drawerOpen.value = false
+  }
+  isSmallViewport.value = isSmall
+}
+
 onMounted(() => {
+  window.addEventListener('resize', syncViewportMode)
   nextTick(() => {
     accessInput.value?.focus?.()
   })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', syncViewportMode)
 })
 </script>
 
@@ -360,11 +421,31 @@ onMounted(() => {
   padding-top: 18px;
 }
 
+.user-trigger {
+  display: flex;
+  align-items: center;
+  width: auto;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.user-trigger:hover {
+  border-radius: 9px;
+  background: rgba(59, 130, 246, 0.08);
+}
+
 .user-avatar {
   display: grid;
   place-items: center;
+  flex-shrink: 0;
   width: 30px;
   height: 30px;
+  margin: 0;
   border-radius: 50%;
   background: #1e293b;
   color: #cbd5e1;
@@ -393,6 +474,186 @@ onMounted(() => {
 
 .footer-menu-icon {
   color: var(--ff-muted);
+}
+
+.clearance-card {
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  border-radius: 14px;
+  background: var(--ff-surface);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+}
+
+.clearance-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 24px 0;
+}
+
+.clearance-label {
+  color: var(--ff-secondary);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.agent-badge {
+  border: 1px solid rgba(251, 191, 36, 0.26);
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.1);
+  color: #fcd34d;
+  font-size: 0.67rem;
+  font-weight: 700;
+  padding: 5px 8px;
+  white-space: nowrap;
+}
+
+.clearance-title {
+  padding-top: 22px;
+  padding-left: 24px;
+  color: var(--ff-text);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.clearance-subtitle {
+  padding-left: 24px;
+  color: var(--ff-secondary) !important;
+}
+
+:deep(.clearance-card .v-card-text) {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.clearance-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0 22px;
+  padding: 14px;
+  border: 1px solid var(--ff-border);
+  border-radius: 10px;
+  background: rgba(59, 130, 246, 0.06);
+}
+
+.clearance-avatar {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #1d4ed8;
+  color: #dbeafe;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.clearance-identity div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.clearance-identity strong {
+  color: var(--ff-text);
+  font-size: 0.9rem;
+}
+
+.clearance-identity span {
+  color: var(--ff-secondary);
+  font-size: 0.75rem;
+}
+
+.clearance-stats {
+  display: grid;
+  gap: 0;
+}
+
+.clearance-stats div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--ff-border);
+}
+
+.clearance-stats div:last-child {
+  border-bottom: 0;
+}
+
+.clearance-stats dt {
+  color: var(--ff-secondary);
+  font-size: 0.75rem;
+}
+
+.clearance-stats dd {
+  color: var(--ff-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.clearance-stats dd span {
+  color: var(--ff-secondary);
+  font-weight: 500;
+}
+
+.clearance-actions {
+  border-top: 1px solid var(--ff-border);
+  padding: 12px 16px;
+}
+
+@media (max-width: 959px) {
+  .dashboard-main,
+  .dashboard-main-rail {
+    margin-left: 0;
+  }
+
+  .top-bar-shell {
+    padding: 0 20px;
+  }
+
+  .top-bar-inner {
+    gap: 16px;
+  }
+
+  .region-filter {
+    gap: 4px;
+  }
+
+  .region-pill {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+}
+
+@media (max-width: 599px) {
+  .top-bar-shell {
+    padding: 0 12px;
+  }
+
+  .top-bar-inner {
+    align-items: flex-start;
+    padding-top: 10px;
+  }
+
+  .page-heading-copy {
+    display: none;
+  }
+
+  .region-filter {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .region-pill {
+    font-size: 0.68rem;
+    padding: 6px 7px;
+  }
 }
 
 .gate-card {
