@@ -17,32 +17,19 @@
 
       <v-row class="overview-row" style="width: 100%; align-items: stretch">
         <v-col cols="12" md="7" lg="7" class="metric-block" style="min-width: 0; display: flex; flex-direction: column">
-          <v-row class="metric-row" style="width: 100%; flex: 1; min-height: 0">
-            <v-col v-for="tile in metricTiles.slice(0, 2)" :key="tile.label" cols="6" class="metric-col" style="min-width: 0; display: flex; flex-direction: column">
-              <MetricCard
-                :label="tile.label"
-                :value="tile.value"
-                :unit="tile.unit"
-                :trend="tile.trend"
-                :delta="tile.delta"
-                :delta-is-good="tile.deltaIsGood"
-                :sparkline="tile.sparkline"
-              />
-            </v-col>
-          </v-row>
-          <v-row class="metric-row" style="width: 100%; flex: 1; min-height: 0">
-            <v-col v-for="tile in metricTiles.slice(2)" :key="tile.label" cols="6" class="metric-col" style="min-width: 0; display: flex; flex-direction: column">
-              <MetricCard
-                :label="tile.label"
-                :value="tile.value"
-                :unit="tile.unit"
-                :trend="tile.trend"
-                :delta="tile.delta"
-                :delta-is-good="tile.deltaIsGood"
-                :sparkline="tile.sparkline"
-              />
-            </v-col>
-          </v-row>
+          <div class="kpi-grid">
+  <MetricCard
+    v-for="tile in metricTiles"
+    :key="tile.label"
+    :label="tile.label"
+    :value="tile.value"
+    :unit="tile.unit"
+    :trend="tile.trend"
+    :delta="tile.delta"
+    :delta-is-good="tile.deltaIsGood"
+    :sparkline="tile.sparkline"
+  />
+</div>
         </v-col>
 
         <v-col cols="12" md="5" lg="5" class="regional-col" style="min-width: 0">
@@ -630,6 +617,14 @@ const exceptionRows = computed(() =>
 
 .exceptions-col {
   display: flex;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+  height: 100%;
 }
 
 .panel-card {
